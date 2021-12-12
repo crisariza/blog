@@ -1,8 +1,8 @@
 ---
-title: "Placeholder 1"
-date: "December 1, 2021"
-category: "Category 1"
-description: "Description of the post Placeholder 1"
+title: "Placeholder 2"
+date: "December 2, 2021"
+category: "Category 2"
+description: "Description of the post Placeholder 2"
 cover_image: "/images/posts/placeholder.jpg"
 ---
 
