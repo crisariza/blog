@@ -2,7 +2,7 @@
 
 Simple static blog using markdown and Next.js
 
-[DEMO](https://blog.vercel.app/)
+https://ariza-blog.vercel.app/
 
 ## Usage
 
