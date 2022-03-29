@@ -1,8 +1,8 @@
-# Next Markdown Blog
+# Blog
 
-Simple static blog using markdown and Next.js
+Static blog using markdown and Next.js
 
-https://ariza-blog.vercel.app/
+https://ariza-blog.vercel.app
 
 ## Usage
 
