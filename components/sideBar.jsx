@@ -5,11 +5,10 @@ import { usePathname } from "next/navigation";
 export default function SideBar() {
   const pathname = usePathname();
 
-  console.log(pathname);
   return (
-    <nav className="mr-16">
+    <nav className="mr-16 mb-6 sm:mb-0">
       <h1 className="text-3xl font-semibold mb-4">Cristian Ariza</h1>
-      <ul>
+      <ul className="flex flex-wrap justify-between sm:block">
         <li className="mb-2">
           <Link
             href="/"
@@ -60,7 +59,7 @@ export default function SideBar() {
         </li>
         <li className="mb-2">
           <Link
-            href="#contact"
+            href="/#contact"
             className={
               pathname === "#contact"
                 ? "font-bold"

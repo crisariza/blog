@@ -1,15 +1,29 @@
-import BlogPage from "../components/blogPage";
 import SideBar from "../components/sideBar";
+import Footer from "../components/footer";
 
-export default function Blog() {
+import MoreStories from "../components/blog/more-stories";
+
+import { getAllPosts } from "../lib/api";
+
+export default function Blog({ allPosts }) {
+  const morePosts = allPosts;
+
   return (
     <div className="max-w-screen-md m-auto sm:p-0 sm:mt-20">
       <div className="flex justify-center">
-        <SideBar></SideBar> <BlogPage></BlogPage>
+        <SideBar></SideBar>{" "}
+        <div className="flex justify-center mb-8">
+          {" "}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        </div>
       </div>
-      <footer className="flex justify-center mt-20 text-neutral-500	">
-        <p>Copyright © 2024 Cristian Ariza. All rights reserved.</p>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }
+export const getStaticProps = async () => {
+  const allPosts = await getAllPosts(["slug", "content"]);
+  return {
+    props: { allPosts },
+  };
+};
