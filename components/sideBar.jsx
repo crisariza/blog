@@ -35,28 +35,17 @@ export default function SideBar() {
         </li>
         <li className="mb-2">
           <Link
-            href="/what-i-like"
+            href="/Cristian Ariza - Resume.pdf"
             className={
-              pathname === "/what-i-like"
+              pathname === "/Cristian Ariza - Resume.pdf"
                 ? "font-bold"
                 : "underline decoration-yellow-300 underline-offset-4"
             }
           >
-            What I like
+            Resume
           </Link>
         </li>
-        <li className="mb-2">
-          <Link
-            href="/misc"
-            className={
-              pathname === "/misc"
-                ? "font-bold"
-                : "underline decoration-yellow-300 underline-offset-4"
-            }
-          >
-            Misc
-          </Link>
-        </li>
+
         <li className="mb-2">
           <Link
             href="/#contact"
