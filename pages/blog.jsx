@@ -1,8 +1,8 @@
+import Head from "next/head";
+
 import SideBar from "../components/sideBar";
 import Footer from "../components/footer";
-
 import MoreStories from "../components/blog/more-stories";
-
 import { getAllPosts } from "../lib/api";
 
 export default function Blog({ allPosts }) {
@@ -10,6 +10,9 @@ export default function Blog({ allPosts }) {
 
   return (
     <div className="max-w-screen-md m-auto sm:p-0 sm:mt-20">
+      <Head>
+        <title>Cristian Ariza - Software Engineer</title>
+      </Head>
       <div className="flex justify-center">
         <SideBar></SideBar>{" "}
         <div className="flex justify-center mb-8">

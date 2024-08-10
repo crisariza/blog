@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
-import Container from "../../components/blog/container";
 import PostBody from "../../components/blog/post-body";
-import Header from "../../components/blog/header";
 import PostHeader from "../../components/blog/post-header";
-import Layout from "../../components/blog/layout";
 import { getPostBySlug, getAllPosts } from "../../lib/api";
 import PostTitle from "../../components/blog/post-title";
 import Head from "next/head";
+import SideBar from "../../components/sideBar";
+import Footer from "../../components/footer";
 
 export default function Post({ post, preview }) {
   const router = useRouter();
@@ -15,9 +14,9 @@ export default function Post({ post, preview }) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout preview={preview}>
-      <Container>
-        <Header />
+    <div className="max-w-screen-md m-6 sm:m-auto sm:p-0 sm:mt-20">
+      <div className="sm:flex sm:justify-center">
+        <SideBar></SideBar>{" "}
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -35,8 +34,9 @@ export default function Post({ post, preview }) {
             </article>
           </>
         )}
-      </Container>
-    </Layout>
+      </div>
+      <Footer></Footer>
+    </div>
   );
 }
 
