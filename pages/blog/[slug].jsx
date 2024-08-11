@@ -23,7 +23,11 @@ export default function Post({ post, preview }) {
           <>
             <article className="mb-8">
               <Head>
-                <title>{post.title} | Cristian Ariza</title>
+                <title>{post.title} | Cristian Ariza</title>{" "}
+                <meta
+                  name="description"
+                  content={`Cristian Ariza, a Software Engineer with over 3 years of experience.`}
+                />
               </Head>
               <PostHeader
                 title={post.title}
