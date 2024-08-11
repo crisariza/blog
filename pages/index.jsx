@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import About from "../components/about";
-import SideBar from "../components/sideBar";
+import SideBar from "../components/side-bar";
 import Footer from "../components/footer";
 
 export default function Home() {

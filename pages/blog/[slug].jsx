@@ -5,7 +5,7 @@ import PostHeader from "../../components/blog/post-header";
 import { getPostBySlug, getAllPosts } from "../../lib/api";
 import PostTitle from "../../components/blog/post-title";
 import Head from "next/head";
-import SideBar from "../../components/sideBar";
+import SideBar from "../../components/side-bar";
 import Footer from "../../components/footer";
 
 export default function Post({ post, preview }) {

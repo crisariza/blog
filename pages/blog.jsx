@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import SideBar from "../components/sideBar";
+import SideBar from "../components/side-bar";
 import Footer from "../components/footer";
 import MoreStories from "../components/blog/more-stories";
 import { getAllPosts } from "../lib/api";
@@ -9,16 +9,13 @@ export default function Blog({ allPosts }) {
   const morePosts = allPosts;
 
   return (
-    <div className="max-w-screen-md m-auto sm:p-0 sm:mt-20">
+    <div className="max-w-screen-md m-6 sm:m-auto sm:p-0 sm:mt-20">
       <Head>
         <title>Cristian Ariza - Software Engineer</title>
       </Head>
-      <div className="flex justify-center">
+      <div className="sm:flex sm:justify-center">
         <SideBar></SideBar>{" "}
-        <div className="flex justify-center mb-8">
-          {" "}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </div>
+        <div> {morePosts.length > 0 && <MoreStories posts={morePosts} />}</div>
       </div>
       <Footer></Footer>
     </div>

@@ -5,7 +5,7 @@ import profilePic from "../public/profilePic.png";
 export default function About() {
   return (
     <div>
-      <div className=" mb-8">
+      <div className="mb-8">
         <div className="w-2/5 sm:w-1/4 mr-6 sm:mr-8 float-left">
           <Image
             src={profilePic}

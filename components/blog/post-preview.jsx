@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const PostPreview = ({ title, mainImage, publishedAt, slug }) => {
   return (
-    <div className="md:flex md:justify-between mb-8 w-128">
-      <div className="w-1/2">
+    <div className="flex justify-between mb-8 w-128">
+      <div className="sm:w-1/2">
         <h3 className="text-2xl mb-2 font-bold">
           <Link
             as={`/blog/${slug}`}
@@ -19,7 +19,7 @@ const PostPreview = ({ title, mainImage, publishedAt, slug }) => {
           <DateFormatter publishedAt={publishedAt} />
         </div>
       </div>
-      <div className="w-64 h-40">
+      <div className="mt-2 sm:mt-0 w-40 h-28">
         <CoverImage slug={slug} title={title} src={mainImage} />
       </div>
     </div>
