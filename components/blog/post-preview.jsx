@@ -6,7 +6,7 @@ const PostPreview = ({ title, mainImage, publishedAt, slug }) => {
   return (
     <div className="flex justify-between mb-8 w-128">
       <div className="sm:w-1/2">
-        <h3 className="text-2xl mb-2 font-bold">
+        <h3 className="text-2xl mb-2 font-semibold">
           <Link
             as={`/blog/${slug}`}
             href="/blog/[slug]"

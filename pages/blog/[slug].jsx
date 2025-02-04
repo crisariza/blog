@@ -5,8 +5,7 @@ import PostHeader from "../../components/blog/post-header";
 import { getPostBySlug, getAllPosts } from "../../lib/api";
 import PostTitle from "../../components/blog/post-title";
 import Head from "next/head";
-import SideBar from "../../components/side-bar";
-import Footer from "../../components/footer";
+import Layout from "../../components/layout";
 
 export default function Post({ post, preview }) {
   const router = useRouter();
@@ -14,33 +13,29 @@ export default function Post({ post, preview }) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <div className="max-w-screen-md m-6 sm:m-auto sm:p-0 sm:mt-20">
-      <div className="sm:flex sm:justify-center">
-        <SideBar></SideBar>{" "}
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article className="mb-8">
-              <Head>
-                <title>{post.title} | Cristian Ariza</title>{" "}
-                <meta
-                  name="description"
-                  content={`Cristian Ariza, a Software Engineer with over 3 years of experience.`}
-                />
-              </Head>
-              <PostHeader
-                title={post.title}
-                mainImage={post.mainImage}
-                publishedAt={post.publishedAt}
+    <Layout>
+      {router.isFallback ? (
+        <PostTitle>Loading…</PostTitle>
+      ) : (
+        <>
+          <article className="mb-8">
+            <Head>
+              <title>{post.title} - Cristian Ariza</title>
+              <meta
+                name="description"
+                content={`Cristian Ariza, a Software Engineer with over 3 years of experience.`}
               />
-              <PostBody body={post.body} />
-            </article>
-          </>
-        )}
-      </div>
-      <Footer></Footer>
-    </div>
+            </Head>
+            <PostHeader
+              title={post.title}
+              mainImage={post.mainImage}
+              publishedAt={post.publishedAt}
+            />
+            <PostBody body={post.body} />
+          </article>
+        </>
+      )}
+    </Layout>
   );
 }
 

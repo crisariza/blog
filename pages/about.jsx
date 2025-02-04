@@ -1,10 +1,10 @@
 import Layout from "../components/layout";
-import Experience from "../components/experience";
+import About from "../components/about";
 
 export default function Index() {
   return (
     <Layout>
-      <Experience></Experience>
+      <About></About>
     </Layout>
   );
 }
