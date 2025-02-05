@@ -7,10 +7,10 @@ export default function Navbar() {
 
   return (
     <div className="flex justify-between">
-      <h1 className="text-white text-xl font-medium">
+      <h1 className="text-neutral-50 text-xl font-medium">
         <Link href="/">Cristian Ariza</Link>
       </h1>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 text-neutral-200">
         <Link
           href="/about"
           className={

@@ -1,8 +1,11 @@
 import { parseISO, format } from "date-fns";
 
-const DateFormatter = ({ publishedAt }) => {
+const DateFormatter = ({
+  publishedAt,
+  format: dateFormat = "LLLL d, yyyy",
+}) => {
   const date = parseISO(publishedAt);
-  return <p>{format(date, "LLLL	d, yyyy")}</p>;
+  return <span>{format(date, dateFormat)}</span>;
 };
 
 export default DateFormatter;

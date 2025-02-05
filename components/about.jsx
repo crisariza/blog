@@ -1,13 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import profilePic from "../public/profilePic.png";
+import Title from "./title";
 
 export default function About() {
   return (
-    <div className="mt-10">
-      <h1 className="text-xl md:text-2xl font-semibold md:leading-none mb-6 text-left">
-        About
-      </h1>
+    <div>
+      <Title text="About" />
       <div className="mb-8 flex flex-col-reverse md:flex-row items-start">
         <div className="flex-1 gap-6 flex flex-col pr-8">
           <p>

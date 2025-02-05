@@ -1,24 +1,26 @@
 import DateFormatter from "./date-formatter";
 import Link from "next/link";
 
-const PostPreview = ({ title, publishedAt, slug }) => {
+const PostPreview = ({ title, publishedAt, slug, showYear }) => {
   return (
-    <div className="flex justify-between mb-8 w-128">
-      <div className="sm:w-1/2">
-        <h3 className="text-2xl mb-2 font-semibold">
-          <Link
-            as={`/blog/${slug}`}
-            href="/blog/[slug]"
-            className="hover:underline"
-          >
-            {title}
-          </Link>
-        </h3>
-        <div className="text-lg text-gray-400">
-          <DateFormatter publishedAt={publishedAt} />
-        </div>
-      </div>
-    </div>
+    <Link
+      as={`/blog/${slug}`}
+      href="/blog/[slug]"
+      className="block text-neutral-200 hover:bg-neutral-800 transition-colors"
+    >
+      <div className="flex items-center justify-between py-4 border-b border-neutral-700">
+        {" "}
+        <div className="flex items-center gap-8">
+          {" "}
+          <div className="w-16 text-neutral-600">
+            {showYear && (
+              <DateFormatter publishedAt={publishedAt} format="yyyy" />
+            )}
+          </div>
+          {title}
+        </div>{" "}
+      </div>{" "}
+    </Link>
   );
 };
 
