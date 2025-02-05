@@ -22,7 +22,7 @@ export default function About() {
           </p>
           <p>
             {" "}
-            I do part-time software engineering work at{" "}
+            I do part-time product engineering work at{" "}
             <Link
               target="_blank"
               href="https://clublanus.com"
