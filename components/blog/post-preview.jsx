@@ -1,8 +1,7 @@
 import DateFormatter from "./date-formatter";
-import CoverImage from "./cover-image";
 import Link from "next/link";
 
-const PostPreview = ({ title, mainImage, publishedAt, slug }) => {
+const PostPreview = ({ title, publishedAt, slug }) => {
   return (
     <div className="flex justify-between mb-8 w-128">
       <div className="sm:w-1/2">
@@ -18,9 +17,6 @@ const PostPreview = ({ title, mainImage, publishedAt, slug }) => {
         <div className="text-lg text-gray-400">
           <DateFormatter publishedAt={publishedAt} />
         </div>
-      </div>
-      <div className="mt-2 sm:mt-0 w-40 h-28">
-        <CoverImage slug={slug} title={title} src={mainImage} />
       </div>
     </div>
   );

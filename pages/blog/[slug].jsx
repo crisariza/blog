@@ -26,11 +26,7 @@ export default function Post({ post, preview }) {
                 content={`Cristian Ariza, a Software Engineer with over 3 years of experience.`}
               />
             </Head>
-            <PostHeader
-              title={post.title}
-              mainImage={post.mainImage}
-              publishedAt={post.publishedAt}
-            />
+            <PostHeader title={post.title} publishedAt={post.publishedAt} />
             <PostBody body={post.body} />
           </article>
         </>

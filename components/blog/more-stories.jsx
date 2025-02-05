@@ -7,7 +7,6 @@ const MoreStories = ({ posts }) => {
         <PostPreview
           key={post.slug}
           title={post.title}
-          mainImage={post.mainImage}
           publishedAt={post.publishedAt}
           slug={post.slug}
         />

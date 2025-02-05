@@ -11,7 +11,7 @@ export default function Layout({ children }) {
           content={`Cristian Ariza - Software Engineer at Accenture and Club Lanús.`}
         />
       </Head>
-      <div className="max-w-screen-sm m-6 sm:m-auto sm:p-0 sm:mt-5">
+      <div className="max-w-screen-sm m-6 sm:m-auto sm:p-0 sm:mt-5 ">
         <TopBar />
         {children}
       </div>
