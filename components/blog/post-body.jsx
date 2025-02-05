@@ -1,11 +1,9 @@
 import ReactMarkdown from "react-markdown";
 
-const PostBody = ({ body }) => {
+export default function PostBody({ body }) {
   return (
-    <div className="prose prose-invert lg:prose-xl max-w-fit">
+    <div className="prose max-w-fit prose-invert text-neutral-400">
       <ReactMarkdown>{body}</ReactMarkdown>
     </div>
   );
-};
-
-export default PostBody;
+}

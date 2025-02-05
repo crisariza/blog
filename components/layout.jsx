@@ -2,11 +2,13 @@ import Head from "next/head";
 import TopBar from "./top-bar";
 import Footer from "./footer";
 
-export default function Layout({ children }) {
+export default function Layout({ children, title }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>Cristian Ariza - Software Engineer</title>{" "}
+        <title>
+          {`Cristian Ariza ${title ? `- ${title}` : "- Software Engineer"}`}
+        </title>
         <meta
           name="description"
           content={`Cristian Ariza - Software Engineer at Accenture and Club Lanús.`}

@@ -5,7 +5,7 @@ const DateFormatter = ({
   format: dateFormat = "LLLL d, yyyy",
 }) => {
   const date = parseISO(publishedAt);
-  return <span>{format(date, dateFormat)}</span>;
+  return <span className="text-neutral-500">{format(date, dateFormat)}</span>;
 };
 
 export default DateFormatter;

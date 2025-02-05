@@ -1,6 +1,6 @@
 const PostTitle = ({ children }) => {
   return (
-    <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold md:leading-none mb-6 text-left">
+    <h1 className="mb-3 text-2xl sm:text-3xl font-semibold  text-neutral-200">
       {children}
     </h1>
   );
