@@ -35,6 +35,20 @@ export default function Footer() {
           </svg>
         </Link>
         <Link
+          href="https://cal.com/crisariza/30-min"
+          target="_blank"
+          className="hover:text-neutral-300"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z" />
+          </svg>
+        </Link>
+        <Link
           target="_blank"
           href="https://github.com/crisariza/blog"
           className="underline decoration-gray-600 underline-offset-4"
