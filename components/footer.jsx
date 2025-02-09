@@ -35,7 +35,7 @@ export default function Footer() {
           </svg>
         </Link>
         <Link
-          href="https://cal.com/crisariza/30-min"
+          href="https://cal.com/crisariza/intro"
           target="_blank"
           className="hover:text-neutral-300"
         >
