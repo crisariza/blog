@@ -10,7 +10,7 @@ export default function About() {
       <div className="mb-8 flex flex-col-reverse md:flex-row items-start">
         <div className="flex-1 gap-6 flex flex-col pr-8">
           <p>
-            I'm a software engineer at{" "}
+            I'm a product engineer. I work full-timeat{" "}
             <Link
               target="_blank"
               href="https://accenture.com"
@@ -18,7 +18,15 @@ export default function About() {
             >
               Accenture
             </Link>
-            . I'm originally from Lanús, Buenos Aires, Argentina.
+            and part-time at{" "}
+            <Link
+              target="_blank"
+              href="https://clublanus.com"
+              className="underline decoration-gray-600 underline-offset-4"
+            >
+              Club Lanús
+            </Link>{" "}
+            I'm originally from Lanús, Buenos Aires, Argentina.
           </p>
           <p>
             {" "}

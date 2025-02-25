@@ -7,11 +7,11 @@ export default function Layout({ children, title }) {
     <div className="flex flex-col min-h-screen">
       <Head>
         <title>
-          {`Cristian Ariza ${title ? `- ${title}` : "- Software Engineer"}`}
+          {`Cristian Ariza ${title ? `- ${title}` : "- Product Engineer"}`}
         </title>
         <meta
           name="description"
-          content={`Cristian Ariza - Software Engineer at Accenture and Club Lanús.`}
+          content={`Cristian Ariza - Product Engineer`}
         />
       </Head>
       <main className="flex-grow flex flex-col">
