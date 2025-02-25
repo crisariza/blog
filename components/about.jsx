@@ -30,19 +30,7 @@ export default function About() {
           </p>
           <p>
             {" "}
-            I do part-time product engineering work at{" "}
-            <Link
-              target="_blank"
-              href="https://clublanus.com"
-              className="underline decoration-gray-600 underline-offset-4"
-            >
-              Club Lanús
-            </Link>
-            .
-          </p>
-          <p>
-            {" "}
-            But my developer journey started with a Coding Bootcamp at{" "}
+            My developer journey started with a Coding Bootcamp at{" "}
             <Link
               target="_blank"
               href="https://soyhenry.com"
