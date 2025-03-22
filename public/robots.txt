@@ -1,4 +1,9 @@
+# *
 User-agent: *
-Disallow: 
-Disallow: /cgi-bin/
-Sitemap: https://www.crisariza.com/sitemap.xml
+Allow: /
+
+# Host
+Host: https://crisariza.com
+
+# Sitemaps
+Sitemap: https://crisariza.com/sitemap.xml
