@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function Layout({
   children,
   title,
-  description = "Cristian Ariza - Product Engineer",
+  description = "Cristian Ariza - Product-minded Engineer with over 3 years of hands-on experience in front-end and back-end development. Eager into startups that create awesome products.",
   image = "/images/default-og-image.jpg",
   url,
 }) {
