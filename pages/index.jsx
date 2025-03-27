@@ -14,7 +14,7 @@ export default function Index() {
     {
       company: { href: "https://museogranate.com", text: "Museo Granate" },
       role: "Product Engineer",
-      period: "2024 — Present",
+      period: "2025 — Present",
     },
   ];
 
