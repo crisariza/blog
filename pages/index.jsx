@@ -4,7 +4,7 @@ import TimeLine from "../components/timeline";
 export default function Index() {
   const experiences = [
     {
-      company: "Accenture",
+      company: { text: "Accenture" },
       role: "Senior Software Engineer",
       period: "2021 — Present",
     },
@@ -12,7 +12,7 @@ export default function Index() {
 
   const projects = [
     {
-      company: "Club Lanús",
+      company: { href: "https://museogranate.com", text: "Museo Granate" },
       role: "Product Engineer",
       period: "2024 — Present",
     },
