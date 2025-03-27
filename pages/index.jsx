@@ -5,7 +5,7 @@ export default function Index() {
   const experiences = [
     {
       company: { text: "Accenture" },
-      role: "Senior Software Engineer",
+      role: "Software Engineer",
       period: "2021 — Present",
     },
   ];
