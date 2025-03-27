@@ -13,7 +13,7 @@ export default function Index() {
   const projects = [
     {
       company: { href: "https://museogranate.com", text: "Museo Granate" },
-      role: "Product Engineer",
+      role: "Software Engineer",
       period: "2025 — Present",
     },
   ];

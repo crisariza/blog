@@ -10,7 +10,7 @@ export default function About() {
       <div className="mb-8 flex flex-col-reverse md:flex-row items-start">
         <div className="flex-1 gap-6 flex flex-col pr-8">
           <p>
-            I'm a product engineer. I work full-timeat{" "}
+            I'm a software engineer. I work full-timeat{" "}
             <Link
               target="_blank"
               href="https://accenture.com"
@@ -18,7 +18,7 @@ export default function About() {
             >
               Accenture
             </Link>
-            and part-time at{" "}
+            and I do some side projects at{" "}
             <Link
               target="_blank"
               href="https://clublanus.com"
@@ -26,7 +26,15 @@ export default function About() {
             >
               Club Lanús
             </Link>{" "}
-            I'm originally from Lanús, Buenos Aires, Argentina.
+            like{" "}
+            <Link
+              target="_blank"
+              href="https://museogranate.com"
+              className="underline decoration-gray-600 underline-offset-4"
+            >
+              Museo Granate
+            </Link>
+            .
           </p>
           <p>
             {" "}

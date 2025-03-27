@@ -6,14 +6,14 @@ import { useRouter } from "next/router";
 export default function Layout({
   children,
   title,
-  description = "Cristian Ariza - Product-minded Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
+  description = "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
   image = "/images/default-og-image.jpg",
   url,
 }) {
   const router = useRouter();
   const pageUrl =
     url || `${process.env.NEXT_PUBLIC_SITE_URL || ""}${router.asPath}`;
-  const pageTitle = `Cristian Ariza${title ? ` - ${title}` : " - Product Engineer"}`;
+  const pageTitle = `Cristian Ariza${title ? ` - ${title}` : " - Software Engineer"}`;
 
   return (
     <div className="flex flex-col min-h-screen">
