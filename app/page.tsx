@@ -1,4 +1,3 @@
-import Layout from "@/components/layout";
 import TimeLine from "@/components/timeline";
 
 interface Experience {
@@ -28,10 +27,10 @@ export default function Home() {
   ];
 
   return (
-    <Layout>
+    <>
       <TimeLine data={experiences} title="Experience" />
       <br />
       <TimeLine data={projects} title="Projects" />
-    </Layout>
+    </>
   );
 }
