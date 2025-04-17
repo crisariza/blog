@@ -14,7 +14,7 @@ export default function Layout({ children, title }: LayoutProps) {
       <main className="flex-grow flex flex-col">
         <div className="max-w-screen-sm w-full px-6 mt-8 mb-8 sm:my-8 mx-auto flex flex-col flex-grow">
           <TopBar />
-          <div className="flex-grow my-24">{children}</div>
+          <div className="flex-grow my-12 sm:my-24">{children}</div>
           <Footer />
         </div>
       </main>
