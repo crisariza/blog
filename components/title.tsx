@@ -1,4 +1,9 @@
-export default function Title({ text, size }) {
+interface TitleProps {
+  text: string;
+  size?: "small" | "large";
+}
+
+export default function Title({ text, size }: TitleProps) {
   return (
     <h1
       className={`${

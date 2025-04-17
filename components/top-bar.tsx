@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function TopBar() {
   const pathname = usePathname();
 
   return (

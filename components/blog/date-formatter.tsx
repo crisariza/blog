@@ -2,7 +2,12 @@
 
 import { parseISO, format } from "date-fns";
 
-const DateFormatter = ({
+interface DateFormatterProps {
+  publishedAt: string;
+  format?: string;
+}
+
+const DateFormatter: React.FC<DateFormatterProps> = ({
   publishedAt,
   format: dateFormat = "LLLL d, yyyy",
 }) => {

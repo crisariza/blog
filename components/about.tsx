@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import profilePic from "../public/profilePic.png";
-import Title from "./title";
+import profilePic from "@/public/profilePic.png";
+import Title from "@/components/title";
 
 export default function About() {
   return (
@@ -10,14 +10,14 @@ export default function About() {
       <div className="mb-8 flex flex-col-reverse md:flex-row items-start">
         <div className="flex-1 gap-6 flex flex-col pr-8">
           <p>
-            I'm a software engineer. I work full-timeat{" "}
+            I'm a software engineer. I work full-time at{" "}
             <Link
               target="_blank"
               href="https://accenture.com"
               className="underline decoration-gray-600 underline-offset-4"
             >
               Accenture
-            </Link>
+            </Link>{" "}
             and I do some side projects at{" "}
             <Link
               target="_blank"

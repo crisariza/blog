@@ -1,18 +1,33 @@
-import Title from "./title";
+import Title from "@/components/title";
 import Link from "next/link";
-export default function TimeLine({ data, title }) {
+
+interface TimeLineItem {
+  company: {
+    text: string;
+    href?: string;
+  };
+  role: string;
+  period: string;
+}
+
+interface TimeLineProps {
+  data: TimeLineItem[];
+  title: string;
+}
+
+export default function TimeLine({ data, title }: TimeLineProps) {
   return (
     <div>
-      <Title text={title} size="small"></Title>
+      <Title text={title} size="small" />
       <div className="mx-auto space-y-8">
         {data.map((experience, index) => (
-          <div key={index} className="border-b border-neutral-700 pb-8 ">
+          <div key={index} className="border-b border-neutral-700 pb-8">
             <div className="flex justify-between items-center">
               <h3 className="text-neutral-200 text-xl font-medium">
                 {experience.company.href ? (
                   <Link
                     href={experience.company.href}
-                    className="flex items-center gap-1 hover:text-neutral-400"
+                    className="hover:text-neutral-400 flex items-center gap-1"
                     target="_blank"
                   >
                     {experience.company.text}

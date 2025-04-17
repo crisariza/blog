@@ -1,9 +1,14 @@
 "use client";
 
-import TopBar from "./top-bar";
-import Footer from "./footer";
+import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 
-export default function Layout({ children }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  title?: string;
+}
+
+export default function Layout({ children, title }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow flex flex-col">

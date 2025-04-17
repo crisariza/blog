@@ -1,8 +1,17 @@
 import Layout from "@/components/layout";
 import TimeLine from "@/components/timeline";
 
+interface Experience {
+  company: {
+    text: string;
+    href?: string;
+  };
+  role: string;
+  period: string;
+}
+
 export default function Home() {
-  const experiences = [
+  const experiences: Experience[] = [
     {
       company: { text: "Accenture" },
       role: "Software Engineer",
@@ -10,7 +19,7 @@ export default function Home() {
     },
   ];
 
-  const projects = [
+  const projects: Experience[] = [
     {
       company: { href: "https://museogranate.com", text: "Museo Granate" },
       role: "Software Engineer",

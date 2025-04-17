@@ -1,7 +1,12 @@
-import PostPreview from "./post-preview";
+import PostPreview from "@/components/blog/post-preview";
+import { Post } from "@/lib/types";
 
-const MoreStories = ({ posts }) => {
-  let currentYear = null;
+interface MoreStoriesProps {
+  posts: Post[];
+}
+
+export default function MoreStories({ posts }: MoreStoriesProps) {
+  let currentYear: number | null = null;
 
   return (
     <div>
@@ -22,6 +27,4 @@ const MoreStories = ({ posts }) => {
       })}
     </div>
   );
-};
-
-export default MoreStories;
+}
