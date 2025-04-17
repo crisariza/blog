@@ -1,5 +1,4 @@
 import { getPostBySlug, getAllPosts } from "@/lib/api";
-import Layout from "@/components/layout";
 import PostBody from "@/components/blog/post-body";
 import PostHeader from "@/components/blog/post-header";
 import { notFound } from "next/navigation";
@@ -58,11 +57,11 @@ export default async function BlogPost({ params }: PageProps) {
   }
 
   return (
-    <Layout title={post.title}>
+    <>
       <article>
         <PostHeader title={post.title} publishedAt={post.publishedAt} />
         <PostBody body={post.body || ""} />
       </article>
-    </Layout>
+    </>
   );
 }
