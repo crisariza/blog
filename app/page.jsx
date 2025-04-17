@@ -1,7 +1,7 @@
-import Layout from "../components/layout";
-import TimeLine from "../components/timeline";
+import Layout from "@/components/layout";
+import TimeLine from "@/components/timeline";
 
-export default function Index() {
+export default function Home() {
   const experiences = [
     {
       company: { text: "Accenture" },

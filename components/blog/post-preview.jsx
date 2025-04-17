@@ -1,11 +1,12 @@
+"use client";
+
 import DateFormatter from "./date-formatter";
 import Link from "next/link";
 
 const PostPreview = ({ title, publishedAt, slug, showYear }) => {
   return (
     <Link
-      as={`/blog/${slug}`}
-      href="/blog/[slug]"
+      href={`/blog/${slug}`}
       className="block text-neutral-200 hover:bg-neutral-800 transition-colors"
     >
       <div className="flex items-center justify-between py-4 border-b border-neutral-700">
