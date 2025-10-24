@@ -27,3 +27,9 @@ O(log N): This is an algorithm that divides the problem why half in each iterati
 O (Nm): If you have a loop inside a loop. But not any nested loop is a O (Nm), just in the cases where both the loops depend of n.
 
 O (Kn): If you diagram this, it would look like a tree, because each time you call a function, that function calls other two functions. The most common example is Fibonacci.
+
+O (V+E): Tipically takes visiting each vertix (V) and every connected node (E). Example: A DFS in a graph.
+
+O (N!): This is the classic Travel Sales Man where you need to check every possible combination for every element.
+
+O (??): This is in a algorithm that the result is random.
