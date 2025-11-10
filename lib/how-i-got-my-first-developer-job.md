@@ -4,8 +4,6 @@ date: "2023-09-10"
 excerpt: "My journey from learning to code to landing my first developer role"
 ---
 
-# How I got my first developer job
-
 This is a story about persistence, learning, and taking the right opportunities at the right time.
 
 ## The Beginning
