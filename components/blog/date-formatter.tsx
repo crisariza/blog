@@ -1,11 +1,7 @@
 "use client";
 
 import { parseISO, format } from "date-fns";
-
-interface DateFormatterProps {
-  publishedAt: string;
-  format?: string;
-}
+import { DateFormatterProps } from "@/types";
 
 const DateFormatter: React.FC<DateFormatterProps> = ({
   publishedAt,

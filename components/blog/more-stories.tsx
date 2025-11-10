@@ -1,9 +1,5 @@
 import PostPreview from "@/components/blog/post-preview";
-import { Post } from "@/lib/types";
-
-interface MoreStoriesProps {
-  posts: Post[];
-}
+import { Post, MoreStoriesProps } from "@/types";
 
 export default function MoreStories({ posts }: MoreStoriesProps) {
   let currentYear: number | null = null;

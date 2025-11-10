@@ -1,8 +1,10 @@
 ---
-title: "My Second Brain"
+title: "My second brain"
 date: "2024-05-15"
 excerpt: "How I organize my knowledge using Notion, RemNote, and Apple Notes"
 ---
+
+# My second brain
 
 I've using Notion for the past 3/4 years replacing .txt, it was a great move and I learn a lot.
 

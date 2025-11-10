@@ -3,13 +3,8 @@ import PostBody from "@/components/blog/post-body";
 import PostHeader from "@/components/blog/post-header";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { Post } from "@/lib/types";
-
-interface PageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import { Post, PageProps } from "@/types";
+import StructuredData from "@/components/structured-data";
 
 export async function generateMetadata({
   params,
@@ -58,6 +53,7 @@ export default async function BlogPost({ params }: PageProps) {
 
   return (
     <>
+      <StructuredData type="article" post={post} />
       <article>
         <PostHeader title={post.title} publishedAt={post.publishedAt} />
         <PostBody body={post.body || ""} />

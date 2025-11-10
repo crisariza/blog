@@ -1,7 +1,4 @@
-interface TitleProps {
-  text: string;
-  size?: "small" | "large";
-}
+import { TitleProps } from "@/types";
 
 export default function Title({ text, size }: TitleProps) {
   return (

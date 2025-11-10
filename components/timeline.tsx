@@ -1,19 +1,6 @@
 import Title from "@/components/title";
 import Link from "next/link";
-
-interface TimeLineItem {
-  company: {
-    text: string;
-    href?: string;
-  };
-  role: string;
-  period: string;
-}
-
-interface TimeLineProps {
-  data: TimeLineItem[];
-  title: string;
-}
+import { TimeLineItem, TimeLineProps } from "@/types";
 
 export default function TimeLine({ data, title }: TimeLineProps) {
   return (

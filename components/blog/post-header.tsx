@@ -1,9 +1,5 @@
 import DateFormatter from "@/components/blog/date-formatter";
-
-interface PostHeaderProps {
-  title: string;
-  publishedAt: string;
-}
+import { PostHeaderProps } from "@/types";
 
 export default function PostHeader({ title, publishedAt }: PostHeaderProps) {
   return (

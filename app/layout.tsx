@@ -1,8 +1,9 @@
 import "@/styles/globals.css";
-import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
+import StructuredData from "@/components/structured-data";
 
 export const viewport = {
   width: "device-width",
@@ -11,7 +12,7 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://crisariza.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://crisariza.com"
   ),
   title: "Cristian Ariza - Software Engineer",
   description:
@@ -57,9 +58,32 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crisariza.com";
+
+  const websiteStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Cristian Ariza - Software Engineer",
+    url: siteUrl,
+    description:
+      "Personal blog and portfolio of Cristian Ariza, Software Engineer",
+    author: {
+      "@type": "Person",
+      name: "Cristian Ariza",
+    },
+    inLanguage: "en-US",
+  };
+
   return (
-    <html lang="en" className={GeistMono.className}>
+    <html lang="en" className={GeistSans.className}>
       <body className="bg-[#1c1c1c] text-neutral-300">
+        <StructuredData type="home" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteStructuredData),
+          }}
+        />
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow flex flex-col">
             <div className="max-w-screen-sm w-full px-6 mt-8 mb-8 sm:my-8 mx-auto flex flex-col flex-grow">

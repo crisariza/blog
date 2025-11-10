@@ -1,10 +1,7 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
-
-interface PostBodyProps {
-  body: string;
-}
+import { PostBodyProps } from "@/types";
 
 export default function PostBody({ body }: PostBodyProps) {
   return (

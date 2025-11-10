@@ -1,10 +1,10 @@
 ---
-title: "How I Got My First Developer Job"
+title: "How I got my first developer job"
 date: "2023-09-10"
 excerpt: "My journey from learning to code to landing my first developer role"
 ---
 
-# How I Got My First Developer Job
+# How I got my first developer job
 
 This is a story about persistence, learning, and taking the right opportunities at the right time.
 

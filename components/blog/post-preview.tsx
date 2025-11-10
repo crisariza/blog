@@ -2,13 +2,7 @@
 
 import DateFormatter from "@/components/blog/date-formatter";
 import Link from "next/link";
-
-interface PostPreviewProps {
-  title: string;
-  publishedAt: string;
-  slug: string;
-  showYear: boolean;
-}
+import { PostPreviewProps } from "@/types";
 
 const PostPreview: React.FC<PostPreviewProps> = ({
   title,

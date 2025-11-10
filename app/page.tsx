@@ -1,16 +1,8 @@
 import TimeLine from "@/components/timeline";
-
-interface Experience {
-  company: {
-    text: string;
-    href?: string;
-  };
-  role: string;
-  period: string;
-}
+import { TimeLineItem } from "@/types";
 
 export default function Home() {
-  const experiences: Experience[] = [
+  const experiences: TimeLineItem[] = [
     {
       company: { text: "Accenture" },
       role: "Software Engineer",
@@ -18,11 +10,10 @@ export default function Home() {
     },
   ];
 
-  const projects: Experience[] = [
+  const projects: TimeLineItem[] = [
     {
       company: { href: "https://museogranate.com", text: "Museo Granate" },
-      role: "Software Engineer",
-      period: "2025 — Present",
+      role: "Product Engineer",
     },
   ];
 

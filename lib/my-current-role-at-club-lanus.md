@@ -1,10 +1,10 @@
 ---
-title: "My Current Role at Club Lanús"
+title: "My current role at Club Lanús"
 date: "2025-06-25"
 excerpt: "Insights about my current position and what I'm working on"
 ---
 
-# My Current Role at Club Lanús
+# My current role at Club Lanús
 
 Working at Club Lanús has been an incredible experience that combines my passion for technology with the excitement of sports.
 

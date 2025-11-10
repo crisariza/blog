@@ -1,0 +1,69 @@
+# llms.txt for Cristian Ariza's Blog
+
+## Site Overview
+This is the personal blog and portfolio website of Cristian Ariza, a Software Engineer with 4 years of hands-on experience in front-end and back-end development.
+
+## Site Structure
+
+### Main Pages
+- `/` - Home page featuring experience timeline and projects
+- `/about` - About page with personal information
+- `/blog` - Blog listing page showing all available blog posts
+- `/blog/[slug]` - Individual blog post pages
+
+### Content Organization
+
+#### Blog Posts
+Blog posts are stored as Markdown files in the `/lib` directory. Each post includes:
+- Title (from frontmatter)
+- Publication date (from frontmatter)
+- Excerpt (from frontmatter)
+- Full content body (Markdown format)
+
+#### Available Blog Posts
+The following blog posts are available:
+- how-i-got-my-first-developer-job
+- my-current-role-at-club-lanus
+- my-second-brain
+
+### Content Format
+- Blog posts use Markdown format with frontmatter
+- Frontmatter includes: title, date, excerpt
+- Posts are sorted by publication date (newest first)
+
+### Navigation
+- Top navigation bar with links to main sections
+- Footer with additional links and information
+
+### Technical Details
+- Built with Next.js 16 (App Router)
+- Uses React Server Components
+- Static site generation for blog posts
+- Markdown processing with gray-matter and react-markdown
+
+## How to Access Content
+
+### Blog Posts
+To access a blog post, use the URL pattern:
+`/blog/[slug]`
+
+Where `[slug]` is the filename of the markdown file without the `.md` extension.
+
+### Example URLs
+- `/blog/how-i-got-my-first-developer-job`
+- `/blog/my-current-role-at-club-lanus`
+- `/blog/my-second-brain`
+
+## Metadata
+- Site URL: https://crisariza.com (or configured via NEXT_PUBLIC_SITE_URL)
+- Language: English (en)
+- Author: Cristian Ariza
+- Focus: Software Engineering, Technology, Development
+
+## Content Themes
+The blog covers topics related to:
+- Software development career
+- Professional experiences
+- Technology and development practices
+- Personal projects and work
+

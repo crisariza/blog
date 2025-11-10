@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { Post } from "@/lib/types";
+import { Post, GetPostBySlugParams } from "@/types";
 
 const postsDirectory = path.join(process.cwd(), "lib");
 
@@ -39,10 +39,6 @@ export const getAllPosts = async (): Promise<Post[]> => {
 
   return posts;
 };
-
-interface GetPostBySlugParams {
-  slug: string;
-}
 
 export async function getPostBySlug({
   slug,
