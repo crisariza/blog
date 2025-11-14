@@ -6,7 +6,7 @@ export default function Home() {
     {
       company: { text: "Accenture" },
       role: "Software Engineer",
-      period: "2021 — Present",
+      period: "2021 - Present",
     },
   ];
 
