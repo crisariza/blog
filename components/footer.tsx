@@ -3,7 +3,10 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="flex justify-between items-center text-neutral-400">
-      <p>hi@crisariza.com</p>
+      <Link href="mailto:mecrisariza@gmail.com">
+        {" "}
+        <p>mecrisariza@gmail.com</p>
+      </Link>
 
       <div className="flex items-center gap-4">
         <Link
