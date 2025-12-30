@@ -31,6 +31,7 @@ export interface PostPreviewProps {
   publishedAt: string;
   slug: string;
   showYear: boolean;
+  index?: number;
 }
 
 export interface StructuredDataProps {

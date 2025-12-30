@@ -36,7 +36,8 @@ export default function StructuredData({
         "@type": "Blog",
         name: "Cristian Ariza's Blog",
         url: `${siteUrl}/blog`,
-        description: "Blog posts about software development, technology, and more",
+        description:
+          "Blog posts about software development, technology, and more",
         author: {
           "@type": "Person",
           name: "Cristian Ariza",
@@ -77,4 +78,3 @@ export default function StructuredData({
     />
   );
 }
-

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build outputs
+.next
+out
+dist
+build
+
+# Generated files
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env*.local
+
+# Public files
+public/sitemap*.xml
+
+# Other
+.DS_Store
+*.pem
+

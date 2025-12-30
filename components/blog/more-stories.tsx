@@ -6,7 +6,7 @@ export default function MoreStories({ posts }: MoreStoriesProps) {
 
   return (
     <div>
-      {posts.map((post) => {
+      {posts.map((post, index) => {
         const year = new Date(post.publishedAt).getFullYear();
         const showYear = currentYear !== year;
         currentYear = year;
@@ -18,6 +18,7 @@ export default function MoreStories({ posts }: MoreStoriesProps) {
             publishedAt={post.publishedAt}
             slug={post.slug}
             showYear={showYear}
+            index={index}
           />
         );
       })}
