@@ -56,7 +56,7 @@ export default async function BlogPost({ params }: PageProps) {
       <StructuredData type="article" post={post} />
       <article>
         <PostHeader title={post.title} publishedAt={post.publishedAt} />
-        <PostBody body={post.body || ""} />
+        <PostBody body={post.body ?? ""} />
       </article>
     </>
   );

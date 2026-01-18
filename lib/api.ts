@@ -24,10 +24,10 @@ export const getAllPosts = async (): Promise<Post[]> => {
     posts.push({
       _id: slug,
       slug,
-      title: data.title || "Untitled",
-      publishedAt: data.date || new Date().toISOString(),
+      title: data.title ?? "Untitled",
+      publishedAt: data.date ?? new Date().toISOString(),
       body: content,
-      excerpt: data.excerpt || "",
+      excerpt: data.excerpt ?? "",
     });
   }
 
@@ -53,12 +53,12 @@ export async function getPostBySlug({
     return {
       _id: slug,
       slug,
-      title: data.title || "Untitled",
-      publishedAt: data.date || new Date().toISOString(),
+      title: data.title ?? "Untitled",
+      publishedAt: data.date ?? new Date().toISOString(),
       body: content,
-      excerpt: data.excerpt || "",
+      excerpt: data.excerpt ?? "",
     };
-  } catch (error) {
+  } catch {
     // File not found or other error
     return undefined;
   }

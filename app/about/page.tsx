@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import profilePic from "@/public/profilePic.png";
+import profilePic from "@/public/profile-pic.png";
 import Title from "@/components/title";
 
 export default function AboutPage() {
@@ -38,13 +38,13 @@ export default function AboutPage() {
         <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
           <div className="flex-1 flex flex-col gap-6 order-2 md:order-1">
             <motion.p variants={itemVariants}>
-              Hey! I'm Cris, a software engineer originally from Lanús, Buenos
-              Aires, Argentina.
+              Hey! I&apos;m Cris, a software engineer originally from Lanús,
+              Buenos Aires, Argentina.
             </motion.p>
             <motion.p variants={itemVariants}>
-              Since I was a kid, I've been fascinated by computers. I got my
-              first one at five years old, and as I grew up, I started playing
-              around with hardware and eventually writing software.
+              Since I was a kid, I&apos;ve been fascinated by computers. I got
+              my first one at five years old, and as I grew up, I started
+              playing around with hardware and eventually writing software.
             </motion.p>
           </div>
           <motion.div
@@ -97,17 +97,17 @@ export default function AboutPage() {
                 Accenture
               </Link>
             </motion.span>
-            , where I've been working ever since.
+            , where I&apos;ve been working ever since.
           </motion.p>
           <motion.p variants={itemVariants}>
-            Since then, I've worked on a wide range of projects, from small
+            Since then, I&apos;ve worked on a wide range of projects, from small
             startups to large-scale enterprise systems. Every project has taught
-            me something new, and I'm still learning every single day.
+            me something new, and I&apos;m still learning every single day.
           </motion.p>
           <motion.p variants={itemVariants}>
             In 2024, I met Club Lanús president Luis Chebel and began
             collaborating with the club on its digital transformation
-            initiatives. Some of the projects I've built include{" "}
+            initiatives. Some of the projects I&apos;ve built include{" "}
             <motion.span
               whileHover={{ scale: 1.05 }}
               style={{ display: "inline-block" }}

@@ -1,10 +1,10 @@
-import { Post, StructuredDataProps } from "@/types";
+import { StructuredDataProps } from "@/types";
 
 export default function StructuredData({
   type = "home",
   post,
 }: StructuredDataProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crisariza.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crisariza.com";
 
   const getStructuredData = () => {
     if (type === "article" && post) {
@@ -12,7 +12,7 @@ export default function StructuredData({
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         headline: post.title,
-        description: post.excerpt || "",
+        description: post.excerpt ?? "",
         author: {
           "@type": "Person",
           name: "Cristian Ariza",

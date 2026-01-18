@@ -1,12 +1,16 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "postbuild": "next-sitemap",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "lint": "eslint .",
+    "lint:strict": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -27,11 +31,19 @@
     "npm": "11.x"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.0.0",
     "postcss": "^8.4.41",
     "prettier": "^3.7.4",
     "tailwindcss": "^3.4.9",

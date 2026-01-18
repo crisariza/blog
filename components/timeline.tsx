@@ -3,7 +3,7 @@
 import Title from "@/components/title";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { TimeLineItem, TimeLineProps } from "@/types";
+import { TimeLineProps } from "@/types";
 
 export default function TimeLine({ data, title }: TimeLineProps) {
   return (
@@ -12,7 +12,7 @@ export default function TimeLine({ data, title }: TimeLineProps) {
       <div className="mx-auto space-y-8">
         {data.map((experience, index) => (
           <motion.div
-            key={index}
+            key={`${experience.company.text}-${experience.period}`}
             className="border-b border-neutral-700 pb-8"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}

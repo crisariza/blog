@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
+import { ReactNode } from "react";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import StructuredData from "@/components/structured-data";
@@ -12,7 +13,7 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://crisariza.com"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://crisariza.com"
   ),
   title: "Cristian Ariza - Software Engineer",
   description:
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     title: "Cristian Ariza - Software Engineer",
     description:
       "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
-    url: process.env.NEXT_PUBLIC_SITE_URL,
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? undefined,
     siteName: "Cristian Ariza",
     images: [
       {
@@ -53,12 +54,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crisariza.com";
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crisariza.com";
 
   const websiteStructuredData = {
     "@context": "https://schema.org",
