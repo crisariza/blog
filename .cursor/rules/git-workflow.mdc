@@ -1,0 +1,27 @@
+---
+description: Commits, branches, and pre-commit checks
+alwaysApply: true
+---
+
+# Git y Flujo de Trabajo
+
+## Commits
+
+- Commits chicos y descriptivos: un cambio lógico por commit
+- Formato: `tipo(scope): descripción breve`
+  - Ejemplos: `feat(admin): add user management`, `fix(auth): resolve login issue`
+- Incluir descripción breve en el mensaje del commit
+- No commitear código roto ni con errores de lint o tests
+
+## Branches
+
+- Feature branches para nuevas funcionalidades o cambios grandes
+- Nombre de branches: `feature/nombre-descriptivo` o `fix/nombre-descriptivo`
+- Hacer pull frecuente de la rama base para evitar conflictos grandes
+
+## Pre-commit (automatizado)
+
+- **Husky** (`.husky/pre-commit`): ejecuta **lint-staged** (ESLint `--max-warnings 0` + Prettier en archivos staged) y luego **`npm run verify`** (lint estricto en todo el repo, Prettier check, `tsc --noEmit`).
+- **`npm run build`** ya incluye `verify` antes de `next build` (alineado con `code-style.mdc`).
+- **Tests**: este repo no define aún un runner de tests; cuando exista, añadir `npm test` al hook o al workflow de CI.
+- **CI**: GitHub Actions (`.github/workflows/ci.yml`) corre `npm ci` y `npm run build` en push/PR a `main`/`master`.

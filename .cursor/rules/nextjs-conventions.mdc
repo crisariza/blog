@@ -1,0 +1,28 @@
+---
+description: Next.js, Tailwind, and API routes conventions
+globs: "**/*.tsx,app/**/*.ts,app/**/*.tsx"
+alwaysApply: false
+---
+
+# Convenciones del Proyecto (Next.js)
+
+## Next.js
+
+- Usar Server Components por defecto, Client Components solo cuando sea necesario
+- Marcar componentes cliente con `"use client"` explícitamente
+- Usar `async/await` para Server Components que fetchean datos
+- Manejar errores con `error.tsx` y loading states con `loading.tsx`
+
+## Estilos
+
+- **Tailwind + capa global**: Casi todo el estilo con utilidades Tailwind en componentes. **`styles/globals.css`** está permitido para `@tailwind` base/components/utilities, `@layer base|components`, tokens compartidos (p. ej. clases `link-*`) y lo documentado en `design-system.mdc`.
+- **Otros `.css`**: Evitar CSS modules u hojas adicionales salvo necesidad clara.
+- **Estilos inline (`style={{}}`)**: Solo cuando sea estrictamente necesario (valores dinámicos que Tailwind no exprese, o propiedades no cubiertas). Documentar brevemente el motivo en código o en la PR.
+- Mantener componentes de UI reutilizables en `components/ui/` (crear la carpeta cuando haga falta).
+
+## API Routes
+
+- Mantener API routes en `app/api/`
+- Validar input en todas las rutas API
+- Retornar códigos de estado HTTP apropiados
+- Manejar errores de forma consistente

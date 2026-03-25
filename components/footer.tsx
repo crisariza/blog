@@ -12,7 +12,7 @@ export default function Footer() {
       transition={{ duration: 0.5, delay: 0.2 }}
     >
       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Link href="mailto:mecrisariza@gmail.com">
+        <Link href="mailto:mecrisariza@gmail.com" className="link-subtle">
           {" "}
           <p>mecrisariza@gmail.com</p>
         </Link>
@@ -26,7 +26,7 @@ export default function Footer() {
           <Link
             href="https://linkedin.com/in/crisariza"
             target="_blank"
-            className="hover:text-neutral-300"
+            className="link-subtle"
           >
             <svg
               className="w-5 h-5"
@@ -45,7 +45,7 @@ export default function Footer() {
           <Link
             href="https://x.com/crisarizx"
             target="_blank"
-            className="hover:text-neutral-300"
+            className="link-subtle"
           >
             <svg
               className="w-5 h-5"
@@ -61,7 +61,7 @@ export default function Footer() {
           <Link
             href="https://cal.com/crisariza/intro"
             target="_blank"
-            className="hover:text-neutral-300"
+            className="link-subtle"
           >
             <svg
               className="w-5 h-5"
@@ -77,11 +77,9 @@ export default function Footer() {
           <Link
             target="_blank"
             href="https://github.com/crisariza/blog"
-            className="flex items-center gap-1"
+            className="link-inline flex items-center gap-1"
           >
-            <span className="underline decoration-gray-600 underline-offset-4">
-              Source
-            </span>
+            <span>Source</span>
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

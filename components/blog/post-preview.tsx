@@ -22,9 +22,9 @@ const PostPreview: React.FC<PostPreviewProps> = ({
     >
       <Link
         href={`/blog/${slug}`}
-        className="block text-neutral-200 hover:bg-neutral-800 transition-colors"
+        className="-mx-2 block rounded-surface px-2 text-neutral-200 transition-colors hover:bg-surface-hover"
       >
-        <div className="flex items-center justify-between py-4 border-b border-neutral-700">
+        <div className="flex items-center justify-between border-b border-line py-4">
           <div className="flex items-center gap-4 md:gap-8">
             <motion.div
               className="w-16 shrink-0 text-neutral-600"

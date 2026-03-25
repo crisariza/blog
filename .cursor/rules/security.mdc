@@ -1,0 +1,26 @@
+---
+description: Secrets, validation, and access control
+alwaysApply: true
+---
+
+# Seguridad
+
+## Secrets y Variables de Entorno
+
+- Nunca commitear secrets (ni siquiera en branches locales)
+- Usar siempre variables de entorno para datos sensibles
+- Verificar que `.env.local` y `.env` estén en `.gitignore` (en este repo ya están listados junto a `.env.*.local`)
+- No hardcodear API keys, tokens o credenciales
+
+## Validación y Sanitización
+
+- Validar y sanitizar datos de entrada tanto en frontend como backend
+- Usar bibliotecas de validación (ej: zod, yup) para schemas
+- Validar en el cliente para UX, pero siempre validar también en el servidor
+
+## Permisos y Acceso
+
+- Revisar explícitamente los permisos de acceso a cada dato o pantalla
+- Implementar checks de autorización en rutas protegidas
+- No confiar solo en el frontend para control de acceso
+- Validar permisos en el backend/API

@@ -39,7 +39,7 @@ export default [
       ...typescriptEslint.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
@@ -55,7 +55,7 @@ export default [
       "@typescript-eslint/prefer-nullish-coalescing": "warn",
       "@typescript-eslint/prefer-optional-chain": "warn",
       "@typescript-eslint/no-non-null-assertion": "warn",
-      complexity: ["warn", 15],
+      complexity: ["warn", 10],
       "max-depth": ["warn", 5],
       "max-params": ["warn", 6],
       "max-lines": [
@@ -140,6 +140,7 @@ export default [
   {
     ignores: [
       "node_modules/**",
+      "next-env.d.ts",
       ".next/**",
       "out/**",
       "dist/**",

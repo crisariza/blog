@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en" className={GeistSans.className}>
-      <body className="bg-[#1c1c1c] text-neutral-300">
+      <body>
         <StructuredData type="home" />
         <script
           type="application/ld+json"

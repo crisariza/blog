@@ -13,7 +13,7 @@ export default function TimeLine({ data, title }: TimeLineProps) {
         {data.map((experience, index) => (
           <motion.div
             key={`${experience.company.text}-${experience.period}`}
-            className="border-b border-neutral-700 pb-8"
+            className="border-b border-line pb-8"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -28,7 +28,7 @@ export default function TimeLine({ data, title }: TimeLineProps) {
                   >
                     <Link
                       href={experience.company.href}
-                      className="hover:text-neutral-400 flex items-center gap-1"
+                      className="link-external"
                       target="_blank"
                     >
                       {experience.company.text}

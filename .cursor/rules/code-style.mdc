@@ -1,0 +1,41 @@
+---
+description: Format, linting, design principles, constants, comments, and naming
+alwaysApply: true
+---
+
+# Código y Estilo
+
+## Formato y Linting
+
+- **Build**: `npm run build` ejecuta antes `npm run verify` (ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`) y luego `next build`.
+- **Commits**: Husky + lint-staged + `verify` en pre-commit (ver `git-workflow.mdc`).
+- Usar `npm run lint:fix` y `npm run format` para corregir automáticamente cuando falle el hook o CI.
+
+## Principios de Diseño
+
+- **SRP**: Cada función y componente debe tener una sola responsabilidad
+- **DRY**: Reutilizar componentes y funciones antes de crear nuevos
+- **Early Returns**: Preferir early returns en lugar de anidar demasiados if
+- **Funciones cortas**: Si una función supera ~100 líneas, refactorizar en funciones más pequeñas
+- **Complejidad ciclomática**: Mantener funciones con complejidad baja (máximo 10)
+
+## Valores y Constantes
+
+- No hardcodear valores mágicos: usar constantes o configuración
+- Crear archivos de constantes en `lib/constants/` cuando sea necesario
+- Usar constantes nombradas descriptivamente en inglés
+
+## Comentarios
+
+- Comentarios solo cuando aportan contexto, no para explicar lo obvio
+- Evitar comentarios TODO/FIXME sin contexto o fecha
+- Documentar funciones complejas con JSDoc cuando sea necesario
+
+## Nomenclatura
+
+- **Variables y funciones**: camelCase en inglés
+- **Componentes**: PascalCase en inglés
+- **Constantes**: UPPER_SNAKE_CASE o camelCase según el contexto
+- **Archivos**: kebab-case (ej: `user-profile.tsx`, `api-client.ts`)
+- Nunca usar spanglish o nombres mal escritos
+- En caso de duda sobre nombres, consultar con ChatGPT o diccionario

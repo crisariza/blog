@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import cn from "classnames";
 
 import { usePathname } from "next/navigation";
 
@@ -14,11 +15,8 @@ export default function TopBar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const linkClassName = (path: string) => {
-    return pathname === path
-      ? "font-semibold"
-      : "hover:underline hover:decoration-gray-600 hover:underline-offset-4";
-  };
+  const linkClassName = (path: string) =>
+    cn("link-nav", pathname === path && "link-nav-active");
 
   const menuVariants = {
     closed: {
@@ -77,7 +75,7 @@ export default function TopBar() {
       {/* Hamburger Menu Button */}
       <motion.button
         onClick={toggleMenu}
-        className="min-[350px]:hidden flex flex-col gap-1.5 text-neutral-300 focus:outline-none"
+        className="min-[350px]:hidden flex flex-col gap-1.5 text-neutral-300 rounded-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         aria-label="Toggle menu"
         whileTap={{ scale: 0.95 }}
       >
@@ -109,7 +107,7 @@ export default function TopBar() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="absolute top-full right-0 mt-4 min-[350px]:hidden bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg py-2 min-w-[150px] z-50"
+            className="absolute top-full right-0 mt-4 min-[350px]:hidden bg-surface-raised border border-line-muted rounded-surface shadow-elevated py-2 min-w-[150px] z-50"
             variants={menuVariants}
             initial="closed"
             animate="open"

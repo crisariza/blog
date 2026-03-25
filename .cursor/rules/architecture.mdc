@@ -1,0 +1,31 @@
+---
+description: Separation of concerns, folder organization, dependencies
+alwaysApply: true
+---
+
+# Arquitectura y Organización
+
+## Separación de Responsabilidades
+
+- **Separar lógica de negocio de la UI**:
+  - Lógica de negocio en `lib/` o `app/api/`
+  - Componentes UI en `components/`
+  - Hooks personalizados en `lib/hooks/`
+- **No acoplar componentes directamente a servicios externos**:
+  - Usar funciones intermedias con fallback
+  - Crear abstracciones en `lib/api/` para servicios externos
+  - Manejar errores y casos edge apropiadamente
+
+## Organización de Carpetas
+
+- Mantener carpetas por dominio o feature, no solo por tipo técnico (ej: `app/admin/partidos/` en lugar de `app/admin/components/partidos/`)
+- Agrupar archivos relacionados por feature
+- Reutilizar componentes antes de crear uno nuevo: revisar `components/ui/` y `components/shared/` antes de crear nuevos
+- Si un componente es específico de una feature, colocarlo en la carpeta de esa feature
+
+## Dependencias y Modularización
+
+- Evitar dependencias circulares; si se detecta una, refactorizar con módulo compartido o reorganizar
+- Usar barrel exports (`index.ts`) con cuidado para evitar ciclos
+- Mantener archivos enfocados y modulares
+- Exportar solo lo necesario desde cada módulo

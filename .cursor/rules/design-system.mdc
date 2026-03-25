@@ -1,0 +1,57 @@
+---
+description: Design tokens, UI patterns, and known inconsistencies for this blog (Tailwind + Geist + dark editorial layout).
+alwaysApply: true
+---
+
+## Brand & layout
+
+- **Mood**: Dark, minimal, editorial; content width is narrow and reading-focused.
+- **Shell**: Single column, `max-w-screen-sm`, horizontal padding `px-6`, vertical rhythm `mt-8 mb-8` / `sm:my-8` on the outer wrapper; main content area `my-12 sm:my-24`.
+- **Motion**: Framer Motion on many screens (fade/slide on enter, small hover nudges on links and list rows). Blog index relies on motion inside `PostPreview` only.
+
+## Design tokens (`tailwind.config.js`)
+
+- **Surfaces**: `bg-surface` (#1c1c1c), `bg-surface-raised` (#171717), `hover:bg-surface-hover` (#262626).
+- **Lines**: `border-line` (#404040, dividers), `border-line-muted` (#262626, raised panel edges).
+- **Radius**: `rounded-surface` (0.375rem) — **policy**: use for elevated panels (mobile menu), focusable icon buttons, and interactive row hovers (blog list). Content dividers stay straight; avatar stays `rounded-full`.
+- **Shadow**: `shadow-elevated` — paired with raised surfaces (e.g. mobile menu).
+
+Body background and default text come from `@layer base` in `styles/globals.css` (`bg-surface text-neutral-300`); `app/layout.tsx` does not duplicate them.
+
+## Semantic link classes (`styles/globals.css`, `@layer components`)
+
+| Class | Use |
+| ----- | --- |
+| `link-nav` + `link-nav-active` | Primary nav (desktop + mobile); active segment gets `font-semibold` and no hover underline. |
+| `link-inline` | In-copy and footer “Source” — persistent underline, `decoration-neutral-600`. |
+| `link-subtle` | Muted targets (footer email, icon-only social) — `hover:text-neutral-300`. |
+| `link-external` | Timeline project/company links — flex row + icon, `hover:text-neutral-400`. |
+
+Combine with utilities when needed (e.g. `link-inline flex items-center gap-1` on GitHub link).
+
+## Typography
+
+- **Font**: Geist Sans (`geist/font/sans` on `<html>` in `app/layout.tsx`).
+- **Body**: From global `body` styles; secondary copy still uses `text-neutral-400` where set in components.
+- **Page / section titles** (`components/title.tsx`): default `text-lg md:text-xl`; `size="small"` uses `text-base md:text-lg` (not `text-md`).
+- **Site name** (top bar): `text-xl`, `text-neutral-50`.
+- **Timeline item titles**: `text-xl`, `font-medium`, `text-neutral-200`.
+- **Blog post title** (`post-header.tsx`): `text-2xl md:text-3xl`, `font-semibold`, `tracking-tight`, `text-neutral-200` (same weight scale as `Title`).
+- **Dates** (`date-formatter.tsx`): `text-neutral-500`; year column in blog list uses `text-neutral-600`.
+- **Markdown** (`post-body.tsx`): `prose prose-invert`, `text-neutral-400`, `max-w-fit`. **`prose-invert` links** are customized in `tailwind.config.js` (`theme.extend.typography.invert`) to match `link-inline`: neutral underline color, hover text brightening.
+
+## Spacing & components
+
+- **Section gap under titles**: `mb-6` on `Title`.
+- **Timeline**: `space-y-8`, `border-b border-line`, `pb-8` per item; hover `x: 4`.
+- **Blog list row**: `-mx-2 px-2 rounded-surface` on the link, `hover:bg-surface-hover`, `border-b border-line`.
+- **Footer**: `flex justify-between`, social icons `w-5 h-5`, gap `gap-4`.
+- **Mobile menu**: `bg-surface-raised`, `border-line-muted`, `rounded-surface`, `shadow-elevated`.
+- **Menu control**: `rounded-surface` + `focus-visible:ring-2 focus-visible:ring-neutral-500` with `ring-offset-surface`.
+
+## Breakpoints & responsive behavior
+
+- **Nav**: `min-[350px]:` switches from hamburger + overlay menu to horizontal links (`gap-6`).
+- **About**: `md:` flips column order and aligns image; image `w-36`.
+- **Post title**: `md:text-3xl`.
+- **404** (`app/not-found.tsx` + `components/not-found-content.tsx`): Framer Motion entrance, `text-neutral-200` / `text-neutral-400`, `link-inline` back to home — aligned with the main shell (no extra `min-h-screen`).

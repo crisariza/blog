@@ -8,7 +8,7 @@ export default function Title({ text, size }: TitleProps) {
     <motion.h1
       className={`${
         size === "small"
-          ? "text-md md:text-lg text-neutral-300"
+          ? "text-base md:text-lg text-neutral-300"
           : "text-lg md:text-xl text-neutral-200"
       } font-semibold md:leading-none mb-6 text-left`}
       initial={{ opacity: 0, y: -10 }}

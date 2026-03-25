@@ -78,7 +78,7 @@ export default function AboutPage() {
               <Link
                 target="_blank"
                 href="https://soyhenry.com"
-                className="underline decoration-gray-600 underline-offset-4"
+                className="link-inline"
               >
                 Henry
               </Link>
@@ -92,7 +92,7 @@ export default function AboutPage() {
               <Link
                 target="_blank"
                 href="https://accenture.com"
-                className="underline decoration-gray-600 underline-offset-4"
+                className="link-inline"
               >
                 Accenture
               </Link>
@@ -115,7 +115,7 @@ export default function AboutPage() {
               <Link
                 target="_blank"
                 href="https://museogranate.com"
-                className="underline decoration-gray-600 underline-offset-4"
+                className="link-inline"
               >
                 Museo Granate
               </Link>
@@ -128,7 +128,7 @@ export default function AboutPage() {
               <Link
                 target="_blank"
                 href="https://clublanus.help.center/"
-                className="underline decoration-gray-600 underline-offset-4"
+                className="link-inline"
               >
                 Club Lanús Help Center
               </Link>
@@ -141,7 +141,7 @@ export default function AboutPage() {
               <Link
                 target="_blank"
                 href="https://api.whatsapp.com/send/?phone=%2B5491128420065&text&type=phone_number&app_absent=0"
-                className="underline decoration-gray-600 underline-offset-4"
+                className="link-inline"
               >
                 WhatsApp chatbot
               </Link>

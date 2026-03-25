@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import NotFoundContent from "@/components/not-found-content";
 
 export const metadata: Metadata = {
   title: "Not Found - Cristian Ariza",
@@ -6,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Not Found</h2>
-      <p>Could not find requested resource</p>
-    </div>
-  );
+  return <NotFoundContent />;
 }

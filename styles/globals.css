@@ -1,7 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  color: rgb(192, 192, 192);
-  background: rgb(28, 28, 28);
+
+@layer base {
+  body {
+    @apply bg-surface text-neutral-300 antialiased;
+  }
+}
+
+@layer components {
+  .link-nav {
+    @apply hover:underline hover:decoration-neutral-600 hover:underline-offset-4;
+  }
+
+  .link-nav-active {
+    @apply font-semibold hover:no-underline;
+  }
+
+  .link-inline {
+    @apply underline decoration-neutral-600 underline-offset-4;
+  }
+
+  .link-subtle {
+    @apply transition-colors hover:text-neutral-300;
+  }
+
+  .link-external {
+    @apply flex items-center gap-1 transition-colors hover:text-neutral-400;
+  }
 }

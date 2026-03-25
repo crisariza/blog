@@ -1,0 +1,21 @@
+---
+description: TypeScript typing and lib/types structure
+globs: "**/*.ts,**/*.tsx"
+alwaysApply: false
+---
+
+# TypeScript y Tipos
+
+## TypeScript
+
+- Tipar correctamente: evitar `any` salvo casos justificados y documentados (ESLint: `@typescript-eslint/no-explicit-any` en error).
+- Usar tipos explícitos para funciones públicas exportadas cuando aporte claridad.
+- Preferir `unknown` sobre `any` cuando sea necesario un comodín.
+- **Strict mode** habilitado en `tsconfig.json` (`strict: true`).
+- Usar `interface` para objetos / formas extensibles, `type` para uniones, intersecciones y utilidades.
+
+## Tipos en este proyecto (blog)
+
+- **Barrel compartido**: tipos de dominio y props reutilizadas viven en `types/index.ts` e import con `@/types` (p. ej. `Post`, props de blog/timeline).
+- **Co-ubicación**: tipos usados solo en un módulo pueden declararse en ese archivo si no se reexportan; al repetirse o compartirse, subirlos a `types/index.ts`.
+- No duplicar la misma forma en varios archivos: extraer a un tipo en `types/index.ts` y reutilizar.

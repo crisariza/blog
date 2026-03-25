@@ -1,0 +1,14 @@
+---
+description: React patterns and performance
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# React y Performance
+
+- Evitar re-renders innecesarios usando:
+  - `React.memo()` para componentes que reciben props estables
+  - `useMemo()` para cálculos costosos
+  - `useCallback()` para funciones pasadas como props
+- Preferir arrow functions para callbacks
+- No crear funciones inline en JSX cuando se pasan como props a componentes hijos
