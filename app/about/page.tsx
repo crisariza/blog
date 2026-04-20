@@ -97,7 +97,7 @@ export default function AboutPage() {
                 Accenture
               </Link>
             </motion.span>
-            , where I&apos;ve been working ever since.
+            , where I&apos;ve been working until 2026 when I joined Paisanos.
           </motion.p>
           <motion.p variants={itemVariants}>
             Since then, I&apos;ve worked on a wide range of projects, from small

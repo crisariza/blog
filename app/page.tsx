@@ -7,15 +7,23 @@ import { TimeLineItem } from "@/types";
 export default function Home() {
   const experiences: TimeLineItem[] = [
     {
+      company: { text: "Paisanos", href: "https://clublanus.com" },
+      role: "Product Engineer",
+      period: "2026 - Present",
+    },
+    {
       company: { text: "Accenture" },
       role: "Software Engineer",
-      period: "2021 - Present",
+      period: "2021 - 2026",
     },
   ];
 
   const projects: TimeLineItem[] = [
     {
-      company: { href: "https://museogranate.com", text: "Museo Granate" },
+      company: {
+        href: "https://museogranate.clublanus.com",
+        text: "Museo Granate",
+      },
       role: "Product Engineer",
     },
   ];
