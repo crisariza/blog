@@ -8,8 +8,13 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/girlfriend",
+        source: "/fiancee",
         destination: "https://www.instagram.com/agust6na/",
+        permanent: true,
+      },
+      {
+        source: "/meet",
+        destination: "https://cal.com/crisariza/intro",
         permanent: true,
       },
     ];
