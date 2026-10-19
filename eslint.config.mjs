@@ -142,6 +142,7 @@ export default [
       "node_modules/**",
       "next-env.d.ts",
       ".next/**",
+      ".vercel/**",
       "out/**",
       "dist/**",
       "build/**",

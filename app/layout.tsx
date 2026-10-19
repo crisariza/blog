@@ -35,13 +35,6 @@ export const metadata: Metadata = {
       "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? undefined,
     siteName: "Cristian Ariza",
-    images: [
-      {
-        url: "/images/default-og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -50,7 +43,6 @@ export const metadata: Metadata = {
     title: "Cristian Ariza - Software Engineer",
     description:
       "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
-    images: ["/images/default-og-image.jpg"],
   },
 };
 
