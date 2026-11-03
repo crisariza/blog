@@ -7,9 +7,9 @@ alwaysApply: true
 
 ## Formato y Linting
 
-- **Build**: `npm run build` ejecuta antes `npm run verify` (ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`) y luego `next build`.
+- **Build**: `pnpm build` ejecuta antes `pnpm verify` (ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`) y luego `next build`.
 - **Commits**: Husky + lint-staged + `verify` en pre-commit (ver `git-workflow.mdc`).
-- Usar `npm run lint:fix` y `npm run format` para corregir automáticamente cuando falle el hook o CI.
+- Usar `pnpm lint:fix` y `pnpm format` para corregir automáticamente cuando falle el hook o CI.
 
 ## Principios de Diseño
 
