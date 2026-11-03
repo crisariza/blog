@@ -4,9 +4,9 @@ Mi sitio personal (blog, timeline, about). Next.js App Router + Tailwind + Geist
 
 ## Comandos
 
-- `npm run dev`, `npm run build` (corre antes `npm run verify`: ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`).
-- Pre-commit con Husky: lint-staged (ESLint `--max-warnings 0` + Prettier) y después `npm run verify`. Si falla: `npm run lint:fix` y `npm run format`.
-- CI (`.github/workflows/ci.yml`) corre `npm ci` y `npm run build` en push y PR a `main`. Todavía no hay tests.
+- `pnpm dev`, `pnpm build` (corre antes `pnpm verify`: ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`).
+- Pre-commit con Husky: lint-staged (ESLint `--max-warnings 0` + Prettier) y después `pnpm verify`. Si falla: `pnpm lint:fix` y `pnpm format`.
+- CI (`.github/workflows/ci.yml`) corre `pnpm install --frozen-lockfile` y `pnpm build` en push y PR a `main`. Todavía no hay tests.
 
 ## Diseño
 

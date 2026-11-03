@@ -149,7 +149,7 @@ export default [
       "*.config.js",
       "*.config.ts",
       "*.config.mjs",
-      "package-lock.json",
+      "pnpm-lock.yaml",
       "tsconfig.tsbuildinfo",
       "public/**",
       "*.min.js",
