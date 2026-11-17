@@ -3,6 +3,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/blog",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug*",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/wpp",
         destination: "https://api.whatsapp.com/send?phone=541123885841",
         permanent: true,

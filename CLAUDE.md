@@ -31,14 +31,15 @@ My personal site and portfolio (home, projects, blog, about, resume). Next.js Ap
 - Components:
   - `components/title.tsx` (handwritten heading with an optional `eyebrow`).
   - Projects: `components/projects/` (`project-card`, `browser-frame` with the three-dot bar and the domain, `project-header`).
-  - `components/experience-list.tsx` (expandable rows with `<details>`) and `components/blog/writing-list.tsx` (rows with the year on the right).
-  - Post or project title: `text-2xl md:text-3xl font-semibold tracking-tight`. Markdown uses `prose prose-invert`, without backticks around inline code.
+  - `components/experience-list.tsx` (expandable rows with `<details>`).
+  - `components/post-body.tsx` renders project Markdown with `prose prose-invert`, without backticks around inline code.
+  - Project title: `text-2xl md:text-3xl font-semibold tracking-tight`.
 - Animations with Framer Motion: fade/slide on enter and small hovers.
 - The nav switches from a hamburger to links at `min-[420px]:`. The "open to work" indicator sits on the right.
 
 ## Content
 
-- Posts: `lib/*.md` (frontmatter `title`, `date`, `excerpt`).
+- There is no blog: the writings section was removed, and `/blog` and `/blog/*` redirect to `/` (`next.config.js`).
 - Projects: `lib/projects/*.md`, read by `lib/projects.ts`; the shared parser is `lib/markdown.ts`.
   - Frontmatter: `title`, `summary`, `company`, `role`, `period`, `order` (sets the order and the `№ 00X`), `category`, `badge`, `tagline`, `stack`, `links` (the first one shows in the browser frame), and optional `image` and `imageAlt`.
 - Screenshots go in `public/projects/*.jpg` at 1440×900, only from public material (websites, store listings, client announcements).

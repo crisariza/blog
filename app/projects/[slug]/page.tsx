@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PostBody from "@/components/blog/post-body";
+import PostBody from "@/components/post-body";
 import ProjectHeader from "@/components/projects/project-header";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 import { PageProps } from "@/types";

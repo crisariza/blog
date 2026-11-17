@@ -1,12 +1,3 @@
-export interface Post {
-  _id: string;
-  slug: string;
-  title: string;
-  publishedAt: string;
-  body?: string;
-  excerpt?: string;
-}
-
 export interface ProjectLink {
   label: string;
   href: string;
@@ -48,43 +39,12 @@ export interface BrowserFrameProps {
   priority?: boolean;
 }
 
-export interface WritingListProps {
-  posts: Post[];
-}
-
 export interface ProjectHeaderProps {
   project: Project;
 }
 
-export interface DateFormatterProps {
-  publishedAt: string;
-  format?: string;
-}
-
-export interface MoreStoriesProps {
-  posts: Post[];
-}
-
 export interface PostBodyProps {
   body: string;
-}
-
-export interface PostHeaderProps {
-  title: string;
-  publishedAt: string;
-}
-
-export interface PostPreviewProps {
-  title: string;
-  publishedAt: string;
-  slug: string;
-  showYear: boolean;
-  index?: number;
-}
-
-export interface StructuredDataProps {
-  type?: "home" | "blog" | "article";
-  post?: Post;
 }
 
 export interface Experience {
