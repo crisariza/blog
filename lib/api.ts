@@ -1,65 +1,35 @@
-import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
 import { Post, GetPostBySlugParams } from "@/types";
+import {
+  MarkdownFile,
+  asString,
+  readAllMarkdownFiles,
+  readMarkdownFile,
+} from "@/lib/markdown";
 
 const postsDirectory = path.join(process.cwd(), "lib");
 
-export const getAllPosts = async (): Promise<Post[]> => {
-  // Get all .md files from the lib directory
-  const fileNames = fs
-    .readdirSync(postsDirectory)
-    .filter((name) => name.endsWith(".md"));
+const toPost = ({ slug, data, content }: MarkdownFile): Post => ({
+  _id: slug,
+  slug,
+  title: asString(data.title, "Untitled"),
+  publishedAt: asString(data.date, new Date().toISOString()),
+  body: content,
+  excerpt: asString(data.excerpt),
+});
 
-  const posts: Post[] = [];
-
-  for (const fileName of fileNames) {
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-
-    // Create slug from filename (remove .md extension)
-    const slug = fileName.replace(/\.md$/, "");
-
-    posts.push({
-      _id: slug,
-      slug,
-      title: data.title ?? "Untitled",
-      publishedAt: data.date ?? new Date().toISOString(),
-      body: content,
-      excerpt: data.excerpt ?? "",
-    });
-  }
-
-  // Sort posts by date (newest first)
-  posts.sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
-
-  return posts;
-};
+export const getAllPosts = async (): Promise<Post[]> =>
+  readAllMarkdownFiles(postsDirectory)
+    .map(toPost)
+    // Newest first
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
 
 export async function getPostBySlug({
   slug,
 }: GetPostBySlugParams): Promise<Post | undefined> {
-  const fileName = `${slug}.md`;
-  const fullPath = path.join(postsDirectory, fileName);
-
-  try {
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-
-    return {
-      _id: slug,
-      slug,
-      title: data.title ?? "Untitled",
-      publishedAt: data.date ?? new Date().toISOString(),
-      body: content,
-      excerpt: data.excerpt ?? "",
-    };
-  } catch {
-    // File not found or other error
-    return undefined;
-  }
+  const file = readMarkdownFile(postsDirectory, slug);
+  return file ? toPost(file) : undefined;
 }

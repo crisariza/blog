@@ -3,19 +3,16 @@
 import { motion } from "framer-motion";
 import { TitleProps } from "@/types";
 
-export default function Title({ text, size }: TitleProps) {
+export default function Title({ text, eyebrow }: TitleProps) {
   return (
-    <motion.h1
-      className={`${
-        size === "small"
-          ? "text-base md:text-lg text-neutral-300"
-          : "text-lg md:text-xl text-neutral-200"
-      } font-semibold md:leading-none mb-6 text-left`}
+    <motion.div
+      className="mb-6"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {text}
-    </motion.h1>
+      {eyebrow && <p className="eyebrow mb-1">{eyebrow}</p>}
+      <h1 className="heading-hand">{text}</h1>
+    </motion.div>
   );
 }

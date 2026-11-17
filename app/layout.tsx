@@ -1,10 +1,17 @@
 import "@/styles/globals.css";
-import { GeistSans } from "geist/font/sans";
+import { Gloria_Hallelujah } from "next/font/google";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import StructuredData from "@/components/structured-data";
+
+const handFont = Gloria_Hallelujah({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-hand",
+  display: "swap",
+});
 
 export const viewport = {
   width: "device-width",
@@ -15,9 +22,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://crisariza.com"
   ),
-  title: "Cristian Ariza - Software Engineer",
+  title: "Cristian Ariza - Product Engineer",
   description:
-    "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
+    "Cristian Ariza - Senior product engineer building full-stack products, mobile apps and production AI agents.",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -30,9 +37,9 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Cristian Ariza - Software Engineer",
+    title: "Cristian Ariza - Product Engineer",
     description:
-      "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
+      "Cristian Ariza - Senior product engineer building full-stack products, mobile apps and production AI agents.",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? undefined,
     siteName: "Cristian Ariza",
     locale: "en_US",
@@ -40,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cristian Ariza - Software Engineer",
+    title: "Cristian Ariza - Product Engineer",
     description:
-      "Cristian Ariza - Software Engineer with 4 years of hands-on experience in front-end and back-end development. Eager in startups that create awesome products.",
+      "Cristian Ariza - Senior product engineer building full-stack products, mobile apps and production AI agents.",
   },
 };
 
@@ -52,7 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const websiteStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Cristian Ariza - Software Engineer",
+    name: "Cristian Ariza - Product Engineer",
     url: siteUrl,
     description:
       "Personal blog and portfolio of Cristian Ariza, Software Engineer",
@@ -64,7 +71,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="en" className={handFont.variable}>
       <body>
         <StructuredData type="home" />
         <script
@@ -75,7 +82,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow flex flex-col">
-            <div className="max-w-screen-sm w-full px-6 mt-8 mb-8 sm:my-8 mx-auto flex flex-col flex-grow">
+            <div className="max-w-3xl w-full px-6 mt-8 mb-8 sm:my-10 mx-auto flex flex-col flex-grow">
               <TopBar />
               <div className="flex-grow my-12 sm:my-24">{children}</div>
               <Footer />
