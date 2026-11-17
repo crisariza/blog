@@ -2,9 +2,7 @@ import Link from "next/link";
 import Title from "@/components/title";
 import ProjectList from "@/components/projects/project-list";
 import ExperienceList from "@/components/experience-list";
-import WritingList from "@/components/blog/writing-list";
 import { getAllProjects } from "@/lib/projects";
-import { getAllPosts } from "@/lib/api";
 import { Experience } from "@/types";
 
 const SOCIALS = [
@@ -52,10 +50,7 @@ const HIGHLIGHT_CLASS =
   "rounded bg-surface-hover px-1 font-mono text-[0.9em] text-neutral-100";
 
 export default async function Home() {
-  const [projects, posts] = await Promise.all([
-    getAllProjects(),
-    getAllPosts(),
-  ]);
+  const projects = await getAllProjects();
 
   return (
     <div className="space-y-20">
@@ -106,13 +101,6 @@ export default async function Home() {
         />
         <ExperienceList experiences={EXPERIENCES} />
       </section>
-
-      {posts.length > 0 && (
-        <section>
-          <Title text="things i've written" eyebrow="Writings" />
-          <WritingList posts={posts} />
-        </section>
-      )}
     </div>
   );
 }

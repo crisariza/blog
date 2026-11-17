@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={handFont.variable}>
       <body>
-        <StructuredData type="home" />
+        <StructuredData />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
