@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function Footer() {
   return (
     <motion.footer
-      className="flex justify-between items-center text-neutral-400"
+      className="flex justify-between items-center border-t border-line pt-6 font-mono text-xs text-neutral-400"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
@@ -29,7 +29,7 @@ export default function Footer() {
             className="link-subtle"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -48,7 +48,7 @@ export default function Footer() {
             className="link-subtle"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -64,7 +64,7 @@ export default function Footer() {
             className="link-subtle"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"

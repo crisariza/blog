@@ -28,7 +28,7 @@ export default function AboutPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Title text="About" />
+      <Title text="about me" eyebrow="About" />
       <motion.div
         className="mb-8"
         variants={containerVariants}

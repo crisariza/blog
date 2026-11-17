@@ -4,17 +4,17 @@
 
 @layer base {
   body {
-    @apply bg-surface text-neutral-300 antialiased;
+    @apply bg-surface bg-dots text-neutral-300 antialiased;
   }
 }
 
 @layer components {
   .link-nav {
-    @apply hover:underline hover:decoration-neutral-600 hover:underline-offset-4;
+    @apply font-mono text-xs lowercase text-neutral-400 transition-colors hover:text-neutral-100;
   }
 
   .link-nav-active {
-    @apply font-semibold hover:no-underline;
+    @apply text-neutral-100;
   }
 
   .link-inline {
@@ -27,5 +27,29 @@
 
   .link-external {
     @apply flex items-center gap-1 transition-colors hover:text-neutral-400;
+  }
+
+  .link-mono {
+    @apply font-mono text-xs text-neutral-300 transition-colors hover:text-neutral-50;
+  }
+
+  .heading-hand {
+    @apply font-hand text-2xl text-neutral-100 md:text-3xl;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500;
+  }
+
+  .chip {
+    @apply rounded border border-line bg-surface-raised/60 px-1.5 py-0.5 font-mono text-[10px] text-neutral-400;
+  }
+
+  .badge {
+    @apply rounded border border-neutral-600 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-neutral-300;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface-raised/80 backdrop-blur-sm;
   }
 }

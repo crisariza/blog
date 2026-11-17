@@ -16,7 +16,7 @@ export default async function BlogPage() {
   return (
     <>
       <StructuredData type="blog" />
-      <Title text="Blog" size="small" />
+      <Title text="things i've written" eyebrow="Writings" />
       {allPosts.length > 0 && <MoreStories posts={allPosts} />}
     </>
   );

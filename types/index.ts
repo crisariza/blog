@@ -7,7 +7,55 @@ export interface Post {
   excerpt?: string;
 }
 
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
+
+export interface Project {
+  slug: string;
+  title: string;
+  summary: string;
+  company: string;
+  role: string;
+  period: string;
+  order: number;
+  category: string;
+  badge: string;
+  tagline: string;
+  stack: string[];
+  links: ProjectLink[];
+  image?: string;
+  imageAlt?: string;
+  body: string;
+}
+
 // Component Props
+export interface ProjectListProps {
+  projects: Project[];
+}
+
+export interface ProjectCardProps {
+  project: Project;
+  index?: number;
+}
+
+export interface BrowserFrameProps {
+  label: string;
+  image?: string;
+  imageAlt?: string;
+  fallback: string;
+  priority?: boolean;
+}
+
+export interface WritingListProps {
+  posts: Post[];
+}
+
+export interface ProjectHeaderProps {
+  project: Project;
+}
+
 export interface DateFormatterProps {
   publishedAt: string;
   format?: string;
@@ -39,23 +87,24 @@ export interface StructuredDataProps {
   post?: Post;
 }
 
-export interface TimeLineItem {
-  company: {
-    text: string;
-    href?: string;
-  };
+export interface Experience {
+  company: string;
+  href?: string;
+  kind: string;
   role: string;
-  period?: string;
+  period: string;
+  location: string;
+  description: string;
+  tags: string[];
 }
 
-export interface TimeLineProps {
-  data: TimeLineItem[];
-  title: string;
+export interface ExperienceListProps {
+  experiences: Experience[];
 }
 
 export interface TitleProps {
   text: string;
-  size?: "small" | "large";
+  eyebrow?: string;
 }
 
 // API & Page Props
