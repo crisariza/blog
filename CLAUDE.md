@@ -1,53 +1,58 @@
 # blog
 
-Mi sitio personal y portfolio (home, proyectos, blog, about, CV). Next.js App Router + Tailwind + Framer Motion.
+My personal site and portfolio (home, projects, blog, about, resume). Next.js App Router + Tailwind + Framer Motion.
 
-## Comandos
+## Language
 
-- `pnpm dev`, `pnpm build` (corre antes `pnpm verify`: ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`).
-- `pnpm resume:pdf`: imprime `resume/resume.html` (fuente única del CV) con Chrome headless y pisa `public/Cristian Ariza - Resume.pdf`, que sirve `/resume`. Tiene que entrar en una página A4.
-- Pre-commit con Husky: lint-staged (ESLint `--max-warnings 0` + Prettier) y después `pnpm verify`. Si falla: `pnpm lint:fix` y `pnpm format`.
-- CI (`.github/workflows/ci.yml`) corre `pnpm install --frozen-lockfile` y `pnpm build` en push y PR a `main`. Todavía no hay tests.
+- **Everything in this repo is in English**: code, comments, docs (including this file), UI copy, content, script output, commit messages, branch names, and PR titles and descriptions.
+- Proper nouns keep their original spelling (Club Atlético Lanús, Ramonín, Museo Granate).
 
-## Diseño
+## Commands
 
-- Referencias: [garvitsingla.in](https://www.garvitsingla.in/) como base, con inspiración de [heyhaigh.ai](https://heyhaigh.ai/). Oscuro, con grilla de puntos de fondo, títulos manuscritos y detalles en monospace.
-- Layout: una columna `max-w-3xl`, `px-6`; contenido principal `my-12 sm:my-24`. Las tarjetas de proyecto van en grilla `md:grid-cols-2`.
-- Tokens en `tailwind.config.js`:
-  - Colores: `bg-surface` (#09090f), `bg-surface-raised` (#101017), `hover:bg-surface-hover` (#17171f), `border-line` (#2a2a33), `border-line-muted` (#1c1c24), `text-accent` (#38bdf8, links destacados y el nombre del hero).
-  - `bg-dots` (grilla de puntos del fondo), `rounded-surface` (paneles chicos, hovers de filas), `rounded-card` (tarjetas), `shadow-elevated` (solo con superficies elevadas, como el menú mobile).
-- Tipografía:
-  - Texto: fuente del sistema (`font-sans`, -apple-system). Nada de Geist ni otras web fonts para el texto; Geist queda solo para las imágenes OG.
-  - Títulos de sección y detalles: Gloria Hallelujah (`font-hand`, cargada con `next/font/google` en `app/layout.tsx`), en minúscula ("things i've built & shipped").
-  - Nav, etiquetas, chips, fechas y links de acción: `font-mono`, chicos (`text-xs` / `text-[10px]`).
-- Clases en `styles/globals.css`:
-  - `heading-hand` (título manuscrito), `eyebrow` (etiqueta en mayúsculas espaciadas sobre un título), `chip` (stack o skills), `badge` (como `[AI AGENT]`), `card` (tarjeta).
-  - Links: `link-nav` + `link-nav-active` (navegación, minúscula mono), `link-mono` (links de acción, con `↗` si salen del sitio), `link-inline` (links en el texto), `link-subtle` (links tenues).
-- Componentes:
-  - `components/title.tsx` (título manuscrito con `eyebrow` opcional).
-  - Proyectos: `components/projects/` (`project-card`, `browser-frame` con la barra de tres puntos y el dominio, `project-header`).
-  - `components/experience-list.tsx` (filas desplegables con `<details>`) y `components/blog/writing-list.tsx` (filas con el año a la derecha).
-  - Título de post o proyecto `text-2xl md:text-3xl font-semibold tracking-tight`. Markdown con `prose prose-invert`, sin backticks en el código inline.
-- Animaciones con Framer Motion: fade/slide al entrar y hovers chicos.
-- La nav pasa de hamburguesa a links en `min-[420px]:`. A la derecha va el indicador "open to work".
+- `pnpm dev`, `pnpm build` (runs `pnpm verify` first: ESLint `lint:strict`, `prettier --check`, `tsc --noEmit`).
+- `pnpm resume:pdf`: prints `resume/resume.html` (the single source of the resume) with headless Chrome and overwrites `public/Cristian Ariza - Resume.pdf`, which `/resume` serves. It must fit on one A4 page.
+- Husky pre-commit: lint-staged (ESLint `--max-warnings 0` + Prettier), then `pnpm build`. If it fails: `pnpm lint:fix` and `pnpm format`.
+- CI (`.github/workflows/ci.yml`) runs `pnpm install --frozen-lockfile` and `pnpm build` on pushes and PRs to `main`. There are no tests yet.
 
-## Contenido
+## Design
+
+- References: [garvitsingla.in](https://www.garvitsingla.in/) as the base, with inspiration from [heyhaigh.ai](https://heyhaigh.ai/). Dark, with a dot-grid background, handwritten headings and monospace details.
+- Layout: a single `max-w-3xl` column, `px-6`; main content `my-12 sm:my-24`. Project cards go in a `md:grid-cols-2` grid.
+- Tokens in `tailwind.config.js`:
+  - Colors: `bg-surface` (#09090f), `bg-surface-raised` (#101017), `hover:bg-surface-hover` (#17171f), `border-line` (#2a2a33), `border-line-muted` (#1c1c24), `text-accent` (#38bdf8, for highlighted links and the name in the hero).
+  - `bg-dots` (background dot grid), `rounded-surface` (small panels, row hovers), `rounded-card` (cards), `shadow-elevated` (only on elevated surfaces, like the mobile menu).
+- Typography:
+  - Body: the system font (`font-sans`, -apple-system). No Geist or other web fonts for text; Geist is only used for OG images.
+  - Section headings and small accents: Gloria Hallelujah (`font-hand`, loaded with `next/font/google` in `app/layout.tsx`), in lowercase ("things i've built & shipped").
+  - Nav, labels, chips, dates and action links: `font-mono`, small (`text-xs` / `text-[10px]`).
+- Classes in `styles/globals.css`:
+  - `heading-hand` (handwritten heading), `eyebrow` (letter-spaced uppercase label above a heading), `chip` (stack or skills), `badge` (like `[AI AGENT]`), `card` (card surface).
+  - Links: `link-nav` + `link-nav-active` (navigation, lowercase mono), `link-mono` (action links, with `↗` when they leave the site), `link-inline` (links in body text), `link-subtle` (muted links).
+- Components:
+  - `components/title.tsx` (handwritten heading with an optional `eyebrow`).
+  - Projects: `components/projects/` (`project-card`, `browser-frame` with the three-dot bar and the domain, `project-header`).
+  - `components/experience-list.tsx` (expandable rows with `<details>`) and `components/blog/writing-list.tsx` (rows with the year on the right).
+  - Post or project title: `text-2xl md:text-3xl font-semibold tracking-tight`. Markdown uses `prose prose-invert`, without backticks around inline code.
+- Animations with Framer Motion: fade/slide on enter and small hovers.
+- The nav switches from a hamburger to links at `min-[420px]:`. The "open to work" indicator sits on the right.
+
+## Content
 
 - Posts: `lib/*.md` (frontmatter `title`, `date`, `excerpt`).
-- Proyectos: `lib/projects/*.md`, en inglés. Los lee `lib/projects.ts`; el parser compartido está en `lib/markdown.ts`.
-  - Frontmatter: `title`, `summary`, `company`, `role`, `period`, `order` (define el orden y el `№ 00X`), `category`, `badge`, `tagline`, `stack`, `links` (el primero se muestra en el marco del navegador), `image` e `imageAlt` (opcionales).
-- Capturas en `public/projects/*.jpg`, a 1440×900, solo de material público (sitios, fichas de las tiendas, novedades del cliente).
-- Solo métricas defendibles. Nada de secrets, URLs internas ni datos personales de usuarios o pacientes.
+- Projects: `lib/projects/*.md`, read by `lib/projects.ts`; the shared parser is `lib/markdown.ts`.
+  - Frontmatter: `title`, `summary`, `company`, `role`, `period`, `order` (sets the order and the `№ 00X`), `category`, `badge`, `tagline`, `stack`, `links` (the first one shows in the browser frame), and optional `image` and `imageAlt`.
+- Screenshots go in `public/projects/*.jpg` at 1440×900, only from public material (websites, store listings, client announcements).
+- Only metrics you can defend. No secrets, internal URLs or personal data about users or patients.
 
-## Código
+## Code
 
-- Server Components por defecto; `"use client"` solo cuando haga falta.
-- Estilos con Tailwind. `styles/globals.css` solo para capas base/components y tokens compartidos. Inline styles solo para valores dinámicos.
-- Tipos compartidos en `types/index.ts` (import `@/types`). Los de un solo módulo pueden quedar en el archivo. Sin `any` (ESLint lo marca como error), strict mode.
-- Nombres en inglés: camelCase para variables y funciones, PascalCase para componentes, kebab-case para archivos. Sin valores mágicos.
-- Funciones cortas, early returns, una responsabilidad por función.
+- Server Components by default; `"use client"` only when needed.
+- Styles with Tailwind. `styles/globals.css` only holds base/components layers and shared tokens. Inline styles only for dynamic values.
+- Shared types live in `types/index.ts` (import from `@/types`). Types used by a single module can stay in that file. No `any` (ESLint errors on it), strict mode.
+- Naming: camelCase for variables and functions, PascalCase for components, kebab-case for files. No magic values.
+- Short functions, early returns, one responsibility per function.
 
 ## Git
 
-- Commits chicos con formato `tipo(scope): descripción`.
-- Nunca commitear secrets (`.env`, `.env.local` y `.env.*.local` están en `.gitignore`).
+- Small commits formatted as `type(scope): description`.
+- Never commit secrets (`.env`, `.env.local` and `.env.*.local` are in `.gitignore`).
