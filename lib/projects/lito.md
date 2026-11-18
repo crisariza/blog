@@ -1,6 +1,6 @@
 ---
 title: "Lito: a production AI agent on WhatsApp"
-summary: "Premedic's WhatsApp assistant for health insurance members: measurable answers, safety guardrails, human handoff and cost engineering."
+summary: "Premedic's WhatsApp assistant for health insurance members: 23,000+ members served, 43,000+ conversations and 156,000+ messages, with measurable answers, safety guardrails and human handoff."
 company: "Paisanos · Premedic"
 role: "Owner, AI engineer"
 period: "2026 - Present"
@@ -22,6 +22,11 @@ links:
   - label: "web.grupopremedic.com.ar"
     href: "https://web.grupopremedic.com.ar/novedades/bienvenido-lito"
 ---
+
+## Impact
+
+- **23,375** members have talked to Lito.
+- **43,638** conversations and **156,159** messages, about 3.6 messages per conversation.
 
 ## The problem
 

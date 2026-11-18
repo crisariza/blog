@@ -1,8 +1,8 @@
 ---
 title: "Lanús ID and digital tickets"
-summary: "The club's single sign-on, member web app and mobile app, plus a ticketing pipeline from the vendor's QR codes to Apple and Google Wallet."
+summary: "The club's single sign-on, used by ~10 club sites and apps, plus the member web and mobile apps and a ticketing pipeline from the vendor's QR codes to Apple and Google Wallet."
 company: "Club Atlético Lanús"
-role: "Lead Engineer (volunteer)"
+role: "Head of Engineering (volunteer)"
 period: "2026 - Present"
 order: 3
 category: "identity · ticketing"

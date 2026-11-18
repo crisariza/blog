@@ -1,8 +1,8 @@
 ---
 title: "Ramonín: the club's AI assistant"
-summary: "An assistant for fans on the web and WhatsApp, with a natural-language-to-SQL agent over the club's historical archive."
+summary: "The club's assistant for fans on the web and WhatsApp, with 6,000+ conversations a month and a natural-language-to-SQL agent over the club's historical archive."
 company: "Club Atlético Lanús"
-role: "Lead Engineer (volunteer)"
+role: "Head of Engineering (volunteer)"
 period: "2025 - Present"
 order: 5
 category: "ai assistant · text-to-sql"

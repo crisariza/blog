@@ -28,7 +28,7 @@ const EXPERIENCES: Experience[] = [
   {
     company: "Club Atlético Lanús",
     kind: "volunteer",
-    role: "Lead Engineer",
+    role: "Head of Engineering",
     period: "2024 — Present",
     location: "Buenos Aires",
     description:
@@ -102,10 +102,7 @@ export default async function Home() {
       </section>
 
       <section>
-        <Title
-          text="the work & the learning"
-          eyebrow="Places I've grown · Experience"
-        />
+        <Title text="the work & the learning" />
         <ExperienceList experiences={EXPERIENCES} />
       </section>
     </div>

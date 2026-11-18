@@ -20,7 +20,7 @@ export default function OfficePolaroid() {
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Open my office"
-          className="block w-full -rotate-3 rounded-sm bg-neutral-100 p-2 pb-9 text-left shadow-elevated outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="block w-full -rotate-3 rounded-sm bg-neutral-100 p-2 pb-7 text-left shadow-elevated outline-none focus-visible:ring-2 focus-visible:ring-accent"
           whileHover={{ rotate: 0, scale: 1.03 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
@@ -33,9 +33,6 @@ export default function OfficePolaroid() {
             unoptimized
             priority
           />
-          <span className="absolute inset-x-0 bottom-2 text-center font-hand text-lg text-neutral-800">
-            cris
-          </span>
         </motion.button>
         <p className="mt-3 text-center font-hand text-xs text-neutral-500">
           ✎ click to explore
