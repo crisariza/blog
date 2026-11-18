@@ -7,7 +7,9 @@ import {
   cableControlPoint,
   clampToPolygon,
   limitDistance,
-  pushOutOfCircles,
+  pushOutOfEllipses,
+  routeCable,
+  smoothPath,
 } from "@/lib/office-physics";
 import { DeskMouseProps, Point } from "@/types";
 
@@ -20,6 +22,11 @@ const START_CENTER = {
 const TUG_RECOIL = 14;
 const CABLE_SPRING = 0.18;
 const CABLE_DAMPING = 0.82;
+/** Same off-white plastic as the mouse: a darker edge and a lighter top give it some volume */
+const CABLE_COLORS = {
+  on: { edge: "#b5a88f", body: "#ddd3bf", highlight: "#f1ebdf" },
+  off: { edge: "#9d927c", body: "#c9c0ad", highlight: "#ddd6c8" },
+};
 
 const toPercent = (value: number, total: number) => `${(value / total) * 100}%`;
 
@@ -30,7 +37,7 @@ const cableEnd = (center: Point): Point => ({
 
 /** Applies the desk, obstacle and cable-length rules to a desired mouse center */
 function constrain(target: Point) {
-  const onDesk = pushOutOfCircles(
+  const onDesk = pushOutOfEllipses(
     clampToPolygon(target, OFFICE_MOUSE.deskArea),
     OFFICE_MOUSE.obstacles
   );
@@ -54,13 +61,15 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
   const [center, setCenter] = useState<Point>(START_CENTER);
   const [wobble, setWobble] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [isTugging, setIsTugging] = useState(false);
+  const [recoilAmount, setRecoilAmount] = useState(0);
   const spriteRef = useRef<HTMLDivElement>(null);
   const grabOffset = useRef<Point>({ x: 0, y: 0 });
   const wobbleVelocity = useRef(0);
   const wobbleValue = useRef(0);
   const previousCenter = useRef<Point>(START_CENTER);
   const wasAtLimit = useRef(false);
+  const recoilValue = useRef(0);
+  const recoilVelocity = useRef(0);
 
   // The cable sways with the mouse's movement and settles with a damped spring
   useEffect(() => {
@@ -75,6 +84,16 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
         Math.abs(wobbleVelocity.current) > 0.05
       ) {
         setWobble(wobbleValue.current);
+      }
+      // The recoil after a tug is a stiffer spring back to rest
+      recoilVelocity.current =
+        (recoilVelocity.current - recoilValue.current * 0.3) * 0.72;
+      recoilValue.current += recoilVelocity.current;
+      if (
+        Math.abs(recoilValue.current) > 0.05 ||
+        Math.abs(recoilVelocity.current) > 0.05
+      ) {
+        setRecoilAmount(recoilValue.current);
       }
       frame = requestAnimationFrame(step);
     };
@@ -93,9 +112,8 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
   }, []);
 
   const tug = useCallback(() => {
-    setIsTugging(true);
     wobbleVelocity.current -= 9;
-    window.setTimeout(() => setIsTugging(false), 320);
+    recoilVelocity.current += TUG_RECOIL * 0.6;
   }, []);
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
@@ -132,24 +150,32 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
     wasAtLimit.current = false;
   };
 
-  const end = cableEnd(center);
+  const { cableAnchor } = OFFICE_MOUSE;
+
+  // Recoil towards the anchor while the cable is taut
+  const restingEnd = cableEnd(center);
+  const recoilAngle = Math.atan2(
+    cableAnchor.y - restingEnd.y,
+    cableAnchor.x - restingEnd.x
+  );
+  const recoil = {
+    x: Math.cos(recoilAngle) * recoilAmount,
+    y: Math.sin(recoilAngle) * recoilAmount,
+  };
+
+  // The cable always ends exactly where the mouse is drawn
+  const drawnCenter = { x: center.x + recoil.x, y: center.y + recoil.y };
+  const end = cableEnd(drawnCenter);
   const control = cableControlPoint(
-    OFFICE_MOUSE.cableAnchor,
+    cableAnchor,
     end,
     OFFICE_MOUSE.cableLength * 0.62,
     wobble
   );
-  const { cableAnchor } = OFFICE_MOUSE;
-  const cablePath = `M ${cableAnchor.x} ${cableAnchor.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
-
-  // Recoil towards the anchor while the cable is taut
-  const recoilAngle = Math.atan2(cableAnchor.y - end.y, cableAnchor.x - end.x);
-  const recoil = isTugging
-    ? {
-        x: Math.cos(recoilAngle) * TUG_RECOIL,
-        y: Math.sin(recoilAngle) * TUG_RECOIL,
-      }
-    : { x: 0, y: 0 };
+  const cablePath = smoothPath(
+    routeCable(cableAnchor, control, end, OFFICE_MOUSE.cableObstacles)
+  );
+  const colors = lampOn ? CABLE_COLORS.on : CABLE_COLORS.off;
 
   return (
     <>
@@ -162,18 +188,33 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
         <path
           d={cablePath}
           fill="none"
-          stroke="rgba(60,35,15,0.28)"
-          strokeWidth={7}
-          transform="translate(2 5)"
+          stroke="rgba(55,30,12,0.3)"
+          strokeWidth={6}
+          transform="translate(1.5 4)"
           strokeLinecap="round"
         />
         <path
           d={cablePath}
           fill="none"
-          stroke={lampOn ? "#efe9dc" : "#d9d3c6"}
-          strokeWidth={5}
+          stroke={colors.edge}
+          strokeWidth={5.5}
           strokeLinecap="round"
-          className="transition-[stroke] duration-500"
+        />
+        <path
+          d={cablePath}
+          fill="none"
+          stroke={colors.body}
+          strokeWidth={4}
+          strokeLinecap="round"
+        />
+        <path
+          d={cablePath}
+          fill="none"
+          stroke={colors.highlight}
+          strokeWidth={1.4}
+          strokeLinecap="round"
+          transform="translate(-0.6 -0.9)"
+          opacity={0.8}
         />
       </svg>
 
@@ -193,18 +234,9 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
           lampOn ? "brightness-100" : "brightness-90"
         )}
         style={{
-          left: toPercent(
-            center.x - HALF_SIZE.x + recoil.x,
-            OFFICE_SCENE.width
-          ),
-          top: toPercent(
-            center.y - HALF_SIZE.y + recoil.y,
-            OFFICE_SCENE.height
-          ),
+          left: toPercent(drawnCenter.x - HALF_SIZE.x, OFFICE_SCENE.width),
+          top: toPercent(drawnCenter.y - HALF_SIZE.y, OFFICE_SCENE.height),
           width: toPercent(OFFICE_MOUSE.width, OFFICE_SCENE.width),
-          transition: isTugging
-            ? "left 160ms ease-out, top 160ms ease-out"
-            : undefined,
         }}
       >
         <img
@@ -212,9 +244,8 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
           alt=""
           draggable={false}
           className={cn(
-            "block h-auto w-full transition-transform duration-150",
-            isDragging &&
-              "-translate-y-[3%] scale-105 drop-shadow-[0_6px_6px_rgba(0,0,0,0.35)]"
+            "block h-auto w-full transition-[filter] duration-150",
+            isDragging && "drop-shadow-[0_3px_3px_rgba(0,0,0,0.3)]"
           )}
         />
       </div>

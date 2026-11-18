@@ -10,6 +10,9 @@ import DeskMouse from "@/components/office/desk-mouse";
 import { OFFICE_OBJECTS, OFFICE_SCENE } from "@/lib/office-objects";
 import { OfficeObject, OfficeSceneProps } from "@/types";
 
+/** Off-layer opacity while the bulb comes back: a quick flicker, then fully on */
+const LAMP_ON_FLICKER = [1, 0.35, 0.8, 0];
+
 const toPoints = (hotspot: OfficeObject["hotspot"]) =>
   hotspot.map(([x, y]) => `${x},${y}`).join(" ");
 
@@ -50,16 +53,20 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
         width={OFFICE_SCENE.width}
         height={OFFICE_SCENE.height}
         className="block h-auto w-full"
-        sizes="(min-width: 1024px) 1024px, 100vw"
         draggable={false}
+        unoptimized
         priority
       />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         initial={false}
-        animate={{ opacity: lampOn ? 0 : 1 }}
-        transition={{ duration: lampOn ? 0.25 : 0.6, ease: "easeOut" }}
+        animate={{ opacity: lampOn ? LAMP_ON_FLICKER : 1 }}
+        transition={
+          lampOn
+            ? { duration: 0.55, times: [0, 0.25, 0.5, 1] }
+            : { duration: 0.45, ease: "easeOut" }
+        }
       >
         <Image
           src={OFFICE_SCENE.srcLampOff}
@@ -67,10 +74,10 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
           width={OFFICE_SCENE.width}
           height={OFFICE_SCENE.height}
           className="block h-auto w-full"
-          sizes="(min-width: 1024px) 1024px, 100vw"
           draggable={false}
+          unoptimized
         />
-        <div className="absolute inset-0 bg-[#0b1020]/20" />
+        <div className="absolute inset-0 bg-[#0b1020]/15" />
       </motion.div>
 
       <svg
@@ -85,14 +92,7 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
             role="button"
             tabIndex={0}
             aria-label={object.title}
-            className={cn(
-              "cursor-pointer outline-none transition-all duration-200",
-              hoveredId === object.id
-                ? "fill-white/25 stroke-white [filter:drop-shadow(0_0_14px_rgba(255,255,255,0.9))]"
-                : "fill-transparent stroke-transparent"
-            )}
-            strokeWidth={6}
-            strokeLinejoin="round"
+            className="cursor-pointer fill-transparent outline-none"
             onMouseEnter={() => setHoveredId(object.id)}
             onMouseLeave={() => setHoveredId(null)}
             onFocus={() => setHoveredId(object.id)}
@@ -104,6 +104,27 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
           />
         ))}
       </svg>
+
+      {OFFICE_OBJECTS.map((object) => (
+        <div
+          key={object.id}
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 transition-opacity duration-200 [filter:drop-shadow(0_0_6px_rgba(255,255,255,0.95))_drop-shadow(0_0_14px_rgba(255,255,255,0.6))]",
+            hoveredId === object.id ? "opacity-100" : "opacity-0"
+          )}
+        >
+          <div
+            className="h-full w-full bg-white/30"
+            style={{
+              maskImage: `url(${object.mask})`,
+              WebkitMaskImage: `url(${object.mask})`,
+              maskSize: "100% 100%",
+              WebkitMaskSize: "100% 100%",
+            }}
+          />
+        </div>
+      ))}
 
       <CoffeeSteam />
       <DeskLamp isOn={lampOn} onToggle={() => setLampOn((on) => !on)} />

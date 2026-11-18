@@ -1,20 +1,31 @@
 "use client";
 
+import { useId } from "react";
 import { motion } from "framer-motion";
 import { OFFICE_MUG, OFFICE_SCENE } from "@/lib/office-objects";
 
-/** Three wisps that drift up from the mug every few seconds */
+/** Faint, wavy wisps that drift up from the coffee now and then */
 const WISPS = [
-  { offset: -0.25, delay: 0, sway: 6 },
-  { offset: 0, delay: 0.6, sway: -7 },
-  { offset: 0.25, delay: 1.2, sway: 5 },
+  {
+    left: "30%",
+    delay: 0,
+    drift: 4,
+    path: "M10 98 C 6 80, 14 66, 9 50 S 5 22, 11 4",
+  },
+  {
+    left: "52%",
+    delay: 1.1,
+    drift: -5,
+    path: "M10 98 C 15 82, 5 68, 11 52 S 15 26, 8 6",
+  },
 ];
-const WISP_DURATION = 3.2;
-const PAUSE_BETWEEN_PUFFS = 4.5;
+const WISP_DURATION = 4.8;
+const PAUSE_BETWEEN_PUFFS = 3.5;
 
 const toPercent = (value: number, total: number) => `${(value / total) * 100}%`;
 
 export default function CoffeeSteam() {
+  const filterId = useId();
   const { steamOrigin, steamWidth, steamHeight } = OFFICE_MUG;
 
   return (
@@ -28,18 +39,32 @@ export default function CoffeeSteam() {
         height: toPercent(steamHeight, OFFICE_SCENE.height),
       }}
     >
+      <svg className="absolute h-0 w-0">
+        <filter id={filterId} x="-50%" y="-10%" width="200%" height="120%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.035 0.09"
+            numOctaves={2}
+            seed={7}
+          />
+          <feDisplacementMap in="SourceGraphic" scale={7} />
+          <feGaussianBlur stdDeviation={1.6} />
+        </filter>
+      </svg>
+
       {WISPS.map((wisp) => (
         <motion.svg
           key={wisp.delay}
-          viewBox="0 0 20 60"
-          className="absolute bottom-0 h-full w-1/3"
-          style={{ left: `${(0.5 + wisp.offset) * 100 - 16}%` }}
-          initial={{ opacity: 0, y: "10%", scaleY: 0.6 }}
+          viewBox="0 0 20 100"
+          preserveAspectRatio="none"
+          className="absolute bottom-0 h-full w-[28%]"
+          style={{ left: wisp.left }}
+          initial={{ opacity: 0, y: "6%" }}
           animate={{
-            opacity: [0, 0.85, 0.6, 0],
-            y: ["10%", "-15%", "-40%", "-65%"],
-            x: [0, wisp.sway, -wisp.sway / 2, wisp.sway],
-            scaleY: [0.6, 1, 1.1, 1.2],
+            opacity: [0, 0.32, 0.2, 0],
+            y: ["6%", "-6%", "-18%", "-30%"],
+            x: [0, wisp.drift, wisp.drift * 1.6, wisp.drift * 2.2],
+            scaleX: [0.8, 1, 1.25, 1.5],
           }}
           transition={{
             duration: WISP_DURATION,
@@ -50,12 +75,12 @@ export default function CoffeeSteam() {
           }}
         >
           <path
-            d="M10 58 C 2 46, 18 38, 10 28 S 4 12, 11 2"
+            d={wisp.path}
             fill="none"
-            stroke="#f8f6f2"
-            strokeWidth={4.5}
+            stroke="#ffffff"
+            strokeWidth={2.4}
             strokeLinecap="round"
-            className="blur-[1px] [filter:drop-shadow(0_0_1.5px_rgba(40,30,20,0.55))]"
+            filter={`url(#${filterId})`}
           />
         </motion.svg>
       ))}

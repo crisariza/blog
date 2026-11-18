@@ -2,10 +2,10 @@ import { OfficeObject, Point } from "@/types";
 
 /** The scene images and the coordinate space everything else is drawn in */
 export const OFFICE_SCENE = {
-  src: "/office/scene-light-on.jpg",
-  srcLampOff: "/office/scene-light-off.jpg",
+  src: "/office/office-on.webp",
+  srcLampOff: "/office/office-off.webp",
   /** The polaroid uses the full scene, with the mouse still on the desk */
-  polaroidSrc: "/office/scene-polaroid.jpg",
+  polaroidSrc: "/office/office-polaroid.webp",
   alt: "Isometric illustration of Cris coding at his desk in a navy cubicle, with a Club Atlético Lanús pennant, Vercel mints, a steel mug and framed posters",
   width: 2336,
   height: 1744,
@@ -18,7 +18,7 @@ export const OFFICE_MOUSE = {
   height: 81,
   start: { x: 1570, y: 824 } satisfies Point,
   /** Where the cable leaves the mouse, relative to the sprite's top-left corner */
-  cableOffset: { x: 108, y: 12 } satisfies Point,
+  cableOffset: { x: 88, y: 14 } satisfies Point,
   /** Where the cable disappears behind the monitor */
   cableAnchor: { x: 1692, y: 758 } satisfies Point,
   cableLength: 300,
@@ -31,26 +31,29 @@ export const OFFICE_MOUSE = {
     { x: 1800, y: 1035 },
     { x: 1555, y: 930 },
   ] satisfies Point[],
-  /** Desk objects the mouse bumps into (distance from the mouse's center) */
+  /** Desk objects the mouse bumps into, as ellipses around the mouse's center */
   obstacles: [
-    { center: { x: 1815, y: 885 }, radius: 100 },
-    { center: { x: 1962, y: 888 }, radius: 78 },
+    { center: { x: 1816, y: 886 }, radiusX: 118, radiusY: 84 },
+    { center: { x: 1965, y: 888 }, radiusX: 96, radiusY: 70 },
+  ],
+  /** Desk objects the cable wraps around instead of crossing */
+  cableObstacles: [
+    { center: { x: 1816, y: 886 }, radiusX: 74, radiusY: 52 },
+    { center: { x: 1965, y: 888 }, radiusX: 50, radiusY: 32 },
   ],
 };
 
 export const OFFICE_LAMP = {
-  /** Small switch on the lamp's base */
-  switchPosition: { x: 1990, y: 902 } satisfies Point,
-  /** Warm glow around the lampshade */
-  glowCenter: { x: 1962, y: 790 } satisfies Point,
-  glowRadius: 260,
+  /** The toggle switch on the lamp's base (it's part of both scene images) */
+  switchPosition: { x: 1987, y: 882 } satisfies Point,
+  switchRadius: 22,
 };
 
 export const OFFICE_MUG = {
   /** Middle of the mug's rim, where the steam starts */
   steamOrigin: { x: 1331, y: 548 } satisfies Point,
-  steamWidth: 150,
-  steamHeight: 280,
+  steamWidth: 70,
+  steamHeight: 170,
 };
 
 export const OFFICE_OBJECTS: OfficeObject[] = [
@@ -66,6 +69,7 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
       { text: ". Building the future, one coffee at a time." },
     ],
     model: "mug",
+    mask: "/office/mask-mug.png",
     hotspot: [
       [1260, 560],
       [1300, 540],
@@ -92,6 +96,7 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
       { text: " at Vercel HQ." },
     ],
     model: "mints",
+    mask: "/office/mask-mints.png",
     hotspot: [
       [1752, 862],
       [1850, 840],
@@ -116,6 +121,7 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
       },
     ],
     model: "pennant",
+    mask: "/office/mask-pennant.png",
     hotspot: [
       [1970, 998],
       [2100, 942],

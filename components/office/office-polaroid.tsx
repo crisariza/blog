@@ -30,7 +30,7 @@ export default function OfficePolaroid() {
             width={OFFICE_SCENE.width}
             height={OFFICE_SCENE.height}
             className="aspect-square w-full object-cover object-[48%_45%]"
-            sizes="208px"
+            unoptimized
             priority
           />
           <span className="absolute inset-x-0 bottom-2 text-center font-hand text-lg text-neutral-800">
