@@ -27,9 +27,9 @@ export default function OfficePolaroid() {
           <Image
             src={OFFICE_SCENE.polaroidSrc}
             alt={OFFICE_SCENE.alt}
-            width={OFFICE_SCENE.width}
-            height={OFFICE_SCENE.height}
-            className="aspect-square w-full object-cover object-[48%_45%]"
+            width={OFFICE_SCENE.polaroidSize}
+            height={OFFICE_SCENE.polaroidSize}
+            className="aspect-square w-full object-cover"
             unoptimized
             priority
           />

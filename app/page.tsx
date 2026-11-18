@@ -102,7 +102,7 @@ export default async function Home() {
       </section>
 
       <section>
-        <Title text="the work & the learning" />
+        <Title text="my work" />
         <ExperienceList experiences={EXPERIENCES} />
       </section>
     </div>

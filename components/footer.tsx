@@ -56,37 +56,13 @@ export default function Footer() {
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
     >
-      <figure className="flex gap-4">
-        <span
-          aria-hidden
-          className="font-hand text-5xl leading-none text-amber-700/80"
-        >
-          “
-        </span>
+      <div className="flex flex-col gap-6">
         <div>
-          <blockquote className="font-hand text-xl leading-relaxed text-neutral-100 sm:text-2xl">
-            “Make it work, make it right, make it fast.”
-          </blockquote>
-          <figcaption className="mt-3 flex items-center gap-3 font-hand text-sm text-neutral-400">
-            — Kent Beck
-            <span
-              aria-hidden
-              className="h-1.5 w-16 rounded-full bg-amber-700/60"
-            />
-          </figcaption>
-        </div>
-      </figure>
-
-      <div className="mt-14 flex flex-col gap-6">
-        <div>
-          <p className="eyebrow">Get in touch · Collaboration</p>
-          <h2 className="mt-2 font-hand text-3xl text-neutral-100 sm:text-4xl">
+          <h2 className="font-hand text-3xl text-neutral-100 sm:text-4xl">
             let&apos;s build something great.
           </h2>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-300">
-            Open to remote senior and founding engineer roles, product work and
-            conversations about AI agents. Drop a line or book a quick intro
-            chat.
+            Open to remote senior and founding engineer roles.
           </p>
         </div>
         <div className="flex flex-col gap-3 min-[520px]:flex-row">
@@ -131,10 +107,13 @@ export default function Footer() {
 
       <div className="mt-12 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-neutral-500">
         <p>
-          <Link href="/" className="font-hand text-sm text-neutral-300">
+          <Link
+            href="/"
+            className="text-neutral-300 transition-colors hover:text-neutral-100"
+          >
             cris ariza
           </Link>{" "}
-          · © {CURRENT_YEAR} · crafted with code &amp; agents
+          · © {CURRENT_YEAR} · crafted with passion &amp; monsters
         </p>
         <button
           type="button"

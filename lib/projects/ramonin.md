@@ -15,7 +15,9 @@ stack:
   - AI Gateway
   - Zod
   - Postgres (Neon)
-links: []
+links:
+  - label: "chat on WhatsApp"
+    href: "https://wa.me/5491128420065"
 ---
 
 ## What it does
