@@ -100,6 +100,8 @@ export interface OfficeObject {
   title: string;
   description: TextSegment[];
   model: OfficeObjectModel;
+  /** Full-scene PNG whose alpha is the object's exact silhouette, for the hover glow */
+  mask: string;
   /** Polygon over the scene image, in the image's pixel coordinates */
   hotspot: [number, number][];
   /** CSS background for the 3D viewer panel */
@@ -141,4 +143,10 @@ export interface DeskMouseProps {
 export interface DeskLampProps {
   isOn: boolean;
   onToggle: () => void;
+}
+
+export interface Ellipse {
+  center: Point;
+  radiusX: number;
+  radiusY: number;
 }

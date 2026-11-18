@@ -1,4 +1,4 @@
-import { Point } from "@/types";
+import { Ellipse, Point } from "@/types";
 
 export const distance = (a: Point, b: Point) =>
   Math.hypot(a.x - b.x, a.y - b.y);
@@ -49,20 +49,88 @@ export function clampToPolygon(point: Point, polygon: Point[]): Point {
   return closest;
 }
 
-/** Pushes a point out of circular obstacles (desk objects the mouse can't pass through) */
-export function pushOutOfCircles(
-  point: Point,
-  circles: { center: Point; radius: number }[]
-): Point {
-  return circles.reduce((current, { center, radius }) => {
-    const gap = distance(current, center);
-    if (gap >= radius || gap === 0) return current;
-    const scale = radius / gap;
+/**
+ * Pushes a point out of elliptical obstacles. Ellipses match the isometric
+ * footprint of round or square desk objects better than circles.
+ */
+export function pushOutOfEllipses(point: Point, ellipses: Ellipse[]): Point {
+  return ellipses.reduce((current, { center, radiusX, radiusY }) => {
+    const dx = (current.x - center.x) / radiusX;
+    const dy = (current.y - center.y) / radiusY;
+    const normalized = Math.hypot(dx, dy);
+    if (normalized >= 1) return current;
+    if (normalized === 0) return { x: center.x, y: center.y + radiusY };
     return {
-      x: center.x + (current.x - center.x) * scale,
-      y: center.y + (current.y - center.y) * scale,
+      x: center.x + (dx / normalized) * radiusX,
+      y: center.y + (dy / normalized) * radiusY,
     };
   }, point);
+}
+
+const quadraticPoint = (
+  start: Point,
+  control: Point,
+  end: Point,
+  t: number
+): Point => {
+  const inverse = 1 - t;
+  return {
+    x:
+      inverse * inverse * start.x + 2 * inverse * t * control.x + t * t * end.x,
+    y:
+      inverse * inverse * start.y + 2 * inverse * t * control.y + t * t * end.y,
+  };
+};
+
+const CABLE_SAMPLES = 28;
+const CABLE_RELAX_PASSES = 6;
+
+/**
+ * Samples the cable curve and relaxes it around desk objects, so it lies on
+ * the desk and wraps around them instead of crossing over.
+ */
+export function routeCable(
+  start: Point,
+  control: Point,
+  end: Point,
+  obstacles: Ellipse[]
+): Point[] {
+  const steps = [...Array(CABLE_SAMPLES + 1).keys()];
+  let points = steps.map((step) =>
+    quadraticPoint(start, control, end, step / CABLE_SAMPLES)
+  );
+
+  for (let pass = 0; pass < CABLE_RELAX_PASSES; pass++) {
+    points = points.map((point, index) => {
+      if (index === 0 || index === points.length - 1) return point;
+      const previous = points[index - 1];
+      const next = points[index + 1];
+      const smoothed = {
+        x: point.x * 0.5 + (previous.x + next.x) * 0.25,
+        y: point.y * 0.5 + (previous.y + next.y) * 0.25,
+      };
+      return pushOutOfEllipses(smoothed, obstacles);
+    });
+  }
+  return points;
+}
+
+/** Smooth SVG path through points (Catmull-Rom converted to cubic Béziers) */
+export function smoothPath(points: Point[]) {
+  if (points.length < 2) return "";
+  const parts = [`M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`];
+  for (let index = 0; index < points.length - 1; index++) {
+    const p0 = points[Math.max(0, index - 1)];
+    const p1 = points[index];
+    const p2 = points[index + 1];
+    const p3 = points[Math.min(points.length - 1, index + 2)];
+    const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 };
+    const c2 = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 };
+    parts.push(
+      `C ${c1.x.toFixed(1)} ${c1.y.toFixed(1)} ${c2.x.toFixed(1)} ${c2.y.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`
+    );
+  }
+  return parts.join(" ");
 }
 
 /** Limits how far a point can be from an anchor; reports whether it hit the limit */
