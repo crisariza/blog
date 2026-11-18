@@ -282,8 +282,9 @@ function buildMug(THREE: ThreeModule) {
         64,
         1,
         true,
-        -Math.PI * 0.55,
-        Math.PI * 1.1
+        // Kept clear of the carabiner, which sits at -x (theta = -PI/2)
+        -Math.PI * 0.3,
+        Math.PI
       ),
       new THREE.MeshStandardMaterial({
         map: bandTexture,

@@ -2,14 +2,16 @@ import { OfficeObject, Point } from "@/types";
 
 /** The scene images and the coordinate space everything else is drawn in */
 export const OFFICE_SCENE = {
-  src: "/office/office-on.webp",
-  srcLampOff: "/office/office-off.webp",
+  src: "/office/office-on-v3.webp",
+  srcLampOff: "/office/office-off-v3.webp",
   /** Square crop centered on the cubicle, with the mouse still on the desk */
-  polaroidSrc: "/office/office-polaroid-square.webp",
+  polaroidSrc: "/office/office-polaroid-v3.webp",
   polaroidSize: 900,
   alt: "Isometric illustration of Cris coding at his desk in a navy cubicle, with a Club Atlético Lanús pennant, Vercel mints, a steel mug and framed posters",
   width: 2336,
   height: 1744,
+  /** Horizontal slice that is shown, so the cubicle sits in the middle of the frame */
+  view: { x: 376, width: 1960 },
 };
 
 /** The draggable mouse, its cable and the desk area it can move in */
@@ -20,17 +22,25 @@ export const OFFICE_MOUSE = {
   start: { x: 1570, y: 824 } satisfies Point,
   /** Where the cable leaves the mouse, relative to the sprite's top-left corner */
   cableOffset: { x: 88, y: 14 } satisfies Point,
-  /** Where the cable disappears behind the monitor */
-  cableAnchor: { x: 1692, y: 758 } satisfies Point,
+  /** The desk grommet both cables drop through, down to the PC under the desk */
+  cableAnchor: { x: 1625, y: 748 } satisfies Point,
+  grommet: { radiusX: 13, radiusY: 7 },
+  /** The keyboard's cable, from its back edge into the grommet */
+  keyboardCable: {
+    start: { x: 1500, y: 733 } satisfies Point,
+    control: { x: 1555, y: 722 } satisfies Point,
+  },
   cableLength: 300,
   /** Area the mouse's center can move in: the free part of the desk top */
   deskArea: [
-    { x: 1540, y: 850 },
-    { x: 1640, y: 795 },
-    { x: 1760, y: 805 },
-    { x: 2060, y: 905 },
-    { x: 1800, y: 1035 },
-    { x: 1555, y: 930 },
+    { x: 1560, y: 845 },
+    { x: 1600, y: 800 },
+    { x: 1660, y: 815 },
+    { x: 1760, y: 845 },
+    { x: 2000, y: 870 },
+    { x: 1860, y: 975 },
+    { x: 1600, y: 875 },
+    { x: 1565, y: 862 },
   ] satisfies Point[],
   /** Desk objects the mouse bumps into, as ellipses around the mouse's center */
   obstacles: [
@@ -70,22 +80,25 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
       { text: ". Building the future, one coffee at a time." },
     ],
     model: "mug",
-    mask: "/office/mask-mug.png",
+    mask: "/office/mask-mug-v2.png",
     hotspot: [
-      [1260, 560],
-      [1300, 540],
-      [1370, 540],
-      [1372, 650],
-      [1300, 652],
-      [1262, 640],
+      [1262, 566],
+      [1282, 558],
+      [1298, 545],
+      [1345, 540],
+      [1370, 552],
+      [1369, 641],
+      [1330, 651],
+      [1296, 641],
+      [1278, 620],
     ],
     backdrop: "radial-gradient(circle at 50% 40%, #3d4148, #101216)",
     photo: {
-      src: "/office/belo-labs.jpg",
+      src: "/office/belo-labs-v2.jpg",
       alt: "Group photo of the mentors and builders at Belo Labs",
-      caption: "Mentors and builders at Belo Labs.",
-      width: 1200,
-      height: 589,
+      caption: "Mentors, judges and builders at Belo.",
+      width: 2000,
+      height: 981,
     },
   },
   {
@@ -106,11 +119,11 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
     ],
     backdrop: "radial-gradient(circle at 50% 40%, #3a3a42, #0e0e12)",
     photo: {
-      src: "/office/vercel-hq.jpg",
+      src: "/office/vercel-hq-v2.jpg",
       alt: "Cris and Guillermo Rauch holding a Club Atlético Lanús shirt in front of the Vercel logo",
       caption: "With Guillermo Rauch at Vercel HQ.",
-      width: 445,
-      height: 689,
+      width: 1080,
+      height: 1674,
     },
   },
   {

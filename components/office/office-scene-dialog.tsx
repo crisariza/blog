@@ -42,7 +42,7 @@ export default function OfficeSceneDialog({ onClose }: OfficeSceneDialogProps) {
         role="dialog"
         aria-modal="true"
         aria-label="My office"
-        className="relative w-[min(100%,calc((100dvh-7rem)*1.34))] max-w-5xl"
+        className="relative w-[min(100%,calc((100dvh-7rem)*1.124))] max-w-5xl"
         initial={{ scale: 0.94, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.94, opacity: 0 }}

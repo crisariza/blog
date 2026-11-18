@@ -30,6 +30,60 @@ const CABLE_COLORS = {
 
 const toPercent = (value: number, total: number) => `${(value / total) * 100}%`;
 
+const {
+  cableAnchor: GROMMET_CENTER,
+  grommet: GROMMET,
+  keyboardCable: KEYBOARD_CABLE,
+} = OFFICE_MOUSE;
+/** The keyboard cable doesn't move, so its path is computed once */
+const KEYBOARD_CABLE_PATH = `M ${KEYBOARD_CABLE.start.x} ${KEYBOARD_CABLE.start.y} Q ${KEYBOARD_CABLE.control.x} ${KEYBOARD_CABLE.control.y} ${GROMMET_CENTER.x} ${GROMMET_CENTER.y}`;
+/** Front half of the grommet's rim, drawn over the cables so they drop into the hole */
+const GROMMET_LIP_PATH = `M ${GROMMET_CENTER.x - GROMMET.radiusX} ${GROMMET_CENTER.y} A ${GROMMET.radiusX} ${GROMMET.radiusY} 0 0 0 ${GROMMET_CENTER.x + GROMMET.radiusX} ${GROMMET_CENTER.y}`;
+
+interface CableStrokeProps {
+  path: string;
+  colors: (typeof CABLE_COLORS)["on"];
+}
+
+/** A plastic cable: soft shadow, darker edge, body and a thin highlight */
+function CableStroke({ path, colors }: CableStrokeProps) {
+  return (
+    <>
+      <path
+        d={path}
+        fill="none"
+        stroke="rgba(55,30,12,0.3)"
+        strokeWidth={6}
+        transform="translate(1.5 4)"
+        strokeLinecap="round"
+      />
+      <path
+        d={path}
+        fill="none"
+        stroke={colors.edge}
+        strokeWidth={5.5}
+        strokeLinecap="round"
+      />
+      <path
+        d={path}
+        fill="none"
+        stroke={colors.body}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
+      <path
+        d={path}
+        fill="none"
+        stroke={colors.highlight}
+        strokeWidth={1.4}
+        strokeLinecap="round"
+        transform="translate(-0.6 -0.9)"
+        opacity={0.8}
+      />
+    </>
+  );
+}
+
 const cableEnd = (center: Point): Point => ({
   x: center.x - HALF_SIZE.x + OFFICE_MOUSE.cableOffset.x,
   y: center.y - HALF_SIZE.y + OFFICE_MOUSE.cableOffset.y,
@@ -185,36 +239,22 @@ export default function DeskMouse({ lampOn }: DeskMouseProps) {
         preserveAspectRatio="none"
         aria-hidden
       >
-        <path
-          d={cablePath}
-          fill="none"
-          stroke="rgba(55,30,12,0.3)"
-          strokeWidth={6}
-          transform="translate(1.5 4)"
-          strokeLinecap="round"
+        <ellipse
+          cx={GROMMET_CENTER.x}
+          cy={GROMMET_CENTER.y}
+          rx={GROMMET.radiusX}
+          ry={GROMMET.radiusY}
+          fill="#1c140e"
+          stroke="#5c4028"
+          strokeWidth={2}
         />
+        <CableStroke path={KEYBOARD_CABLE_PATH} colors={colors} />
+        <CableStroke path={cablePath} colors={colors} />
         <path
-          d={cablePath}
+          d={GROMMET_LIP_PATH}
           fill="none"
-          stroke={colors.edge}
-          strokeWidth={5.5}
-          strokeLinecap="round"
-        />
-        <path
-          d={cablePath}
-          fill="none"
-          stroke={colors.body}
-          strokeWidth={4}
-          strokeLinecap="round"
-        />
-        <path
-          d={cablePath}
-          fill="none"
-          stroke={colors.highlight}
-          strokeWidth={1.4}
-          strokeLinecap="round"
-          transform="translate(-0.6 -0.9)"
-          opacity={0.8}
+          stroke="#6b4a2e"
+          strokeWidth={2.5}
         />
       </svg>
 
