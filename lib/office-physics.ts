@@ -1,118 +1,120 @@
-import { Ellipse, Point } from "@/types";
+import type { DeskBounds, DeskObstacle, Point } from "@/types";
 
-export const distance = (a: Point, b: Point) =>
-  Math.hypot(a.x - b.x, a.y - b.y);
-
-/** Ray casting point-in-polygon test */
-export function isInsidePolygon(point: Point, polygon: Point[]) {
-  let inside = false;
-  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const a = polygon[i];
-    const b = polygon[j];
-    const crosses =
-      a.y > point.y !== b.y > point.y &&
-      point.x < ((b.x - a.x) * (point.y - a.y)) / (b.y - a.y) + a.x;
-    if (crosses) inside = !inside;
-  }
-  return inside;
+export interface SurfaceContact {
+  /** Signed distance to the surface: negative inside */
+  distance: number;
+  /** Outward unit normal */
+  normal: Point;
 }
 
-function closestPointOnSegment(point: Point, a: Point, b: Point): Point {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const lengthSquared = dx * dx + dy * dy;
-  if (lengthSquared === 0) return a;
-  const t = Math.max(
-    0,
-    Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / lengthSquared)
-  );
-  return { x: a.x + t * dx, y: a.y + t * dy };
+const length = (x: number, y: number) => Math.hypot(x, y);
+
+function circleContact(
+  point: Point,
+  center: Point,
+  radius: number
+): SurfaceContact {
+  const dx = point.x - center.x;
+  const dy = point.y - center.y;
+  const gap = length(dx, dy);
+  if (gap === 0) return { distance: -radius, normal: { x: 0, y: -1 } };
+  return { distance: gap - radius, normal: { x: dx / gap, y: dy / gap } };
 }
 
-/** Keeps a point inside the polygon by snapping it to the nearest edge */
-export function clampToPolygon(point: Point, polygon: Point[]): Point {
-  if (isInsidePolygon(point, polygon)) return point;
+/** Rounded box signed distance, in the box's own (unrotated) frame */
+function localBoxContact(
+  local: Point,
+  halfSize: Point,
+  radius: number
+): SurfaceContact {
+  const qx = Math.abs(local.x) - (halfSize.x - radius);
+  const qy = Math.abs(local.y) - (halfSize.y - radius);
+  const signX = Math.sign(local.x) || 1;
+  const signY = Math.sign(local.y) || 1;
+  const outside = length(Math.max(qx, 0), Math.max(qy, 0));
 
-  let closest = polygon[0];
-  let closestDistance = Infinity;
-  polygon.forEach((vertex, index) => {
-    const candidate = closestPointOnSegment(
-      point,
-      vertex,
-      polygon[(index + 1) % polygon.length]
-    );
-    const candidateDistance = distance(point, candidate);
-    if (candidateDistance >= closestDistance) return;
-    closest = candidate;
-    closestDistance = candidateDistance;
-  });
-  return closest;
-}
-
-/**
- * Pushes a point out of elliptical obstacles. Ellipses match the isometric
- * footprint of round or square desk objects better than circles.
- */
-export function pushOutOfEllipses(point: Point, ellipses: Ellipse[]): Point {
-  return ellipses.reduce((current, { center, radiusX, radiusY }) => {
-    const dx = (current.x - center.x) / radiusX;
-    const dy = (current.y - center.y) / radiusY;
-    const normalized = Math.hypot(dx, dy);
-    if (normalized >= 1) return current;
-    if (normalized === 0) return { x: center.x, y: center.y + radiusY };
+  if (outside > 0) {
     return {
-      x: center.x + (dx / normalized) * radiusX,
-      y: center.y + (dy / normalized) * radiusY,
+      distance: outside - radius,
+      normal: {
+        x: (Math.max(qx, 0) / outside) * signX,
+        y: (Math.max(qy, 0) / outside) * signY,
+      },
     };
-  }, point);
+  }
+  const alongX = qx > qy;
+  return {
+    distance: Math.max(qx, qy) - radius,
+    normal: alongX ? { x: signX, y: 0 } : { x: 0, y: signY },
+  };
 }
 
-const quadraticPoint = (
-  start: Point,
-  control: Point,
-  end: Point,
-  t: number
-): Point => {
-  const inverse = 1 - t;
+function boxContact(
+  point: Point,
+  obstacle: Extract<DeskObstacle, { kind: "box" }>
+): SurfaceContact {
+  const cos = Math.cos(obstacle.angle);
+  const sin = Math.sin(obstacle.angle);
+  const dx = point.x - obstacle.center.x;
+  const dy = point.y - obstacle.center.y;
+  const local = { x: dx * cos + dy * sin, y: -dx * sin + dy * cos };
+  const { distance, normal } = localBoxContact(
+    local,
+    obstacle.halfSize,
+    obstacle.radius
+  );
   return {
-    x:
-      inverse * inverse * start.x + 2 * inverse * t * control.x + t * t * end.x,
-    y:
-      inverse * inverse * start.y + 2 * inverse * t * control.y + t * t * end.y,
+    distance,
+    normal: {
+      x: normal.x * cos - normal.y * sin,
+      y: normal.x * sin + normal.y * cos,
+    },
   };
-};
+}
 
-const CABLE_SAMPLES = 28;
-const CABLE_RELAX_PASSES = 6;
+export function obstacleContact(
+  point: Point,
+  obstacle: DeskObstacle
+): SurfaceContact {
+  if (obstacle.kind === "circle") {
+    return circleContact(point, obstacle.center, obstacle.radius);
+  }
+  return boxContact(point, obstacle);
+}
 
 /**
- * Samples the cable curve and relaxes it around desk objects, so it lies on
- * the desk and wraps around them instead of crossing over.
+ * The deepest contact of a disc against the obstacles, or null if it's free.
+ * Resolving the deepest one first and repeating converges without the jitter
+ * of pushing out of each obstacle in turn.
  */
-export function routeCable(
-  start: Point,
-  control: Point,
-  end: Point,
-  obstacles: Ellipse[]
-): Point[] {
-  const steps = [...Array(CABLE_SAMPLES + 1).keys()];
-  let points = steps.map((step) =>
-    quadraticPoint(start, control, end, step / CABLE_SAMPLES)
-  );
-
-  for (let pass = 0; pass < CABLE_RELAX_PASSES; pass++) {
-    points = points.map((point, index) => {
-      if (index === 0 || index === points.length - 1) return point;
-      const previous = points[index - 1];
-      const next = points[index + 1];
-      const smoothed = {
-        x: point.x * 0.5 + (previous.x + next.x) * 0.25,
-        y: point.y * 0.5 + (previous.y + next.y) * 0.25,
-      };
-      return pushOutOfEllipses(smoothed, obstacles);
-    });
+export function deepestContact(
+  point: Point,
+  radius: number,
+  obstacles: DeskObstacle[]
+): SurfaceContact | null {
+  let deepest: SurfaceContact | null = null;
+  for (const obstacle of obstacles) {
+    const contact = obstacleContact(point, obstacle);
+    const depth = contact.distance - radius;
+    if (depth >= 0) continue;
+    if (deepest && depth >= deepest.distance) continue;
+    deepest = { distance: depth, normal: contact.normal };
   }
-  return points;
+  return deepest;
+}
+
+/** How far a disc pokes out of the bounds, as a push back inside (zero if inside) */
+export function boundsCorrection(
+  point: Point,
+  radius: number,
+  bounds: DeskBounds
+): Point {
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, value));
+  return {
+    x: clamp(point.x, bounds.minX + radius, bounds.maxX - radius) - point.x,
+    y: clamp(point.y, bounds.minY + radius, bounds.maxY - radius) - point.y,
+  };
 }
 
 /** Smooth SVG path through points (Catmull-Rom converted to cubic Béziers) */
@@ -131,45 +133,4 @@ export function smoothPath(points: Point[]) {
     );
   }
   return parts.join(" ");
-}
-
-/** Limits how far a point can be from an anchor; reports whether it hit the limit */
-export function limitDistance(
-  anchor: Point,
-  point: Point,
-  maxDistance: number
-) {
-  const gap = distance(anchor, point);
-  if (gap <= maxDistance) return { point, atLimit: false };
-  const scale = maxDistance / gap;
-  return {
-    point: {
-      x: anchor.x + (point.x - anchor.x) * scale,
-      y: anchor.y + (point.y - anchor.y) * scale,
-    },
-    atLimit: true,
-  };
-}
-
-/**
- * Control point for a cable drawn as a quadratic curve: the more slack, the more it bows
- * towards the front of the desk.
- */
-export function cableControlPoint(
-  anchor: Point,
-  end: Point,
-  length: number,
-  wobble: number
-): Point {
-  const gap = distance(anchor, end);
-  const slack = Math.sqrt(Math.max(0, length * length - gap * gap)) * 0.45;
-  const middle = { x: (anchor.x + end.x) / 2, y: (anchor.y + end.y) / 2 };
-  if (gap === 0) return { x: middle.x, y: middle.y + slack };
-
-  // Perpendicular that points down/forward in the isometric view
-  let normal = { x: -(end.y - anchor.y) / gap, y: (end.x - anchor.x) / gap };
-  if (normal.y < 0) normal = { x: -normal.x, y: -normal.y };
-
-  const bow = slack + wobble;
-  return { x: middle.x + normal.x * bow, y: middle.y + normal.y * bow };
 }

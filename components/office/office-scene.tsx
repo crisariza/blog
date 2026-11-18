@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
 import CoffeeSteam from "@/components/office/coffee-steam";
+import DeskDrawers from "@/components/office/desk-drawers";
 import DeskLamp from "@/components/office/desk-lamp";
 import DeskMouse from "@/components/office/desk-mouse";
 import { OFFICE_OBJECTS, OFFICE_SCENE } from "@/lib/office-objects";
@@ -144,6 +145,7 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
 
         <CoffeeSteam />
         <DeskLamp isOn={lampOn} onToggle={() => setLampOn((on) => !on)} />
+        <DeskDrawers lampOn={lampOn} />
         <DeskMouse lampOn={lampOn} />
 
         <AnimatePresence>

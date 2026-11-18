@@ -142,13 +142,68 @@ export interface DeskMouseProps {
   lampOn: boolean;
 }
 
+/**
+ * A desk object the mouse and its cable can pass behind: a cut-out of the
+ * scene image redrawn on top of them, by polygon or by a full-scene mask.
+ */
+export interface OfficeOccluder {
+  id: string;
+  /** Index of its footprint in OFFICE_DESK.obstacles, to tell in front from behind */
+  obstacle: number;
+  /** Outline in scene pixels */
+  polygon?: [number, number][];
+  /** Full-scene PNG whose alpha is the object's silhouette */
+  mask?: string;
+}
+
 export interface DeskLampProps {
   isOn: boolean;
   onToggle: () => void;
 }
 
-export interface Ellipse {
-  center: Point;
-  radiusX: number;
-  radiusY: number;
+export interface Point3 extends Point {
+  z: number;
+}
+
+/** Axis-aligned rectangle on the desk plane, in centimeters */
+export interface DeskBounds {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+}
+
+/** Footprint of a desk object on the desk plane, in centimeters */
+export type DeskObstacle =
+  | { kind: "circle"; center: Point; radius: number }
+  | {
+      kind: "box";
+      center: Point;
+      halfSize: Point;
+      /** Rotation around the vertical axis, in radians */
+      angle: number;
+      /** Corner rounding */
+      radius: number;
+    };
+
+export type DrawerItemKind = "controller" | "remote" | "ball";
+
+/** One drawer of the desk's cabinet, in centimeters on the desk frame */
+export interface OfficeDrawer {
+  id: string;
+  label: string;
+  /** Height of the drawer front's top and bottom edges */
+  top: number;
+  bottom: number;
+  item: DrawerItemKind;
+  /** How far its runners let it out, as a fraction of its depth */
+  maxOpen: number;
+  /** Where the item rests, from the middle of the drawer and its inside front wall */
+  itemStart: Point;
+  /** Turn of the item around the vertical axis, in radians */
+  itemAngle: number;
+}
+
+export interface DeskDrawersProps {
+  lampOn: boolean;
 }
