@@ -2,10 +2,10 @@ import { OfficeObject, Point } from "@/types";
 
 /** The scene images and the coordinate space everything else is drawn in */
 export const OFFICE_SCENE = {
-  src: "/office/office-on-v3.webp",
-  srcLampOff: "/office/office-off-v3.webp",
+  src: "/office/office-on-v4.webp",
+  srcLampOff: "/office/office-off-v4.webp",
   /** Square crop centered on the cubicle, with the mouse still on the desk */
-  polaroidSrc: "/office/office-polaroid-v3.webp",
+  polaroidSrc: "/office/office-polaroid-v4.webp",
   polaroidSize: 900,
   alt: "Isometric illustration of Cris coding at his desk in a navy cubicle, with a Club Atlético Lanús pennant, Vercel mints, a steel mug and framed posters",
   width: 2336,
@@ -135,11 +135,11 @@ export const OFFICE_OBJECTS: OfficeObject[] = [
       },
     ],
     model: "pennant",
-    mask: "/office/mask-pennant.png",
+    mask: "/office/mask-pennant-v2.png",
     hotspot: [
-      [1970, 998],
-      [2100, 942],
-      [2037, 1300],
+      [1894, 1036],
+      [2024, 980],
+      [1961, 1338],
     ],
     backdrop: "radial-gradient(circle at 50% 40%, #3b4254, #12151d)",
     link: { label: "The club's work", href: "/projects/lanus-platform" },
