@@ -2,6 +2,7 @@ import Link from "next/link";
 import Title from "@/components/title";
 import ProjectList from "@/components/projects/project-list";
 import ExperienceList from "@/components/experience-list";
+import OfficePolaroid from "@/components/office/office-polaroid";
 import { getAllProjects } from "@/lib/projects";
 import { Experience } from "@/types";
 
@@ -54,38 +55,44 @@ export default async function Home() {
 
   return (
     <div className="space-y-20">
-      <section className="pt-6">
-        <p className="font-hand text-3xl text-neutral-100 md:text-4xl">
-          hey i am{" "}
-          <span className="rounded bg-surface-hover px-2 text-accent">
-            cris
-          </span>
-        </p>
-        <div className="mt-6 max-w-xl space-y-3 text-neutral-300">
-          <p>
-            Product engineer who ships end to end:{" "}
-            <span className={HIGHLIGHT_CLASS}>TypeScript</span> back ends,{" "}
-            <span className={HIGHLIGHT_CLASS}>React Native</span> apps and{" "}
-            <span className={HIGHLIGHT_CLASS}>AI agents</span> in production.
+      <section className="flex flex-col gap-10 pt-6 sm:flex-row sm:items-center sm:gap-12">
+        <OfficePolaroid />
+        <div>
+          <p className="font-hand text-3xl text-neutral-100 md:text-4xl">
+            hey i am{" "}
+            <span className="rounded bg-surface-hover px-2 text-accent">
+              cris
+            </span>
           </p>
-          <p>
-            I work AI-native: I design, direct and review coding agents inside
-            strict guardrails, so moving fast doesn&apos;t mean breaking things.
-          </p>
-          <p>Based in Buenos Aires, working remotely with US time zones.</p>
-        </div>
-        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="font-hand text-xs text-neutral-500">socials ➔</span>
-          {SOCIALS.map((social) => (
-            <Link
-              key={social.label}
-              href={social.href}
-              target={social.href.startsWith("http") ? "_blank" : undefined}
-              className="link-mono"
-            >
-              {social.label}
-            </Link>
-          ))}
+          <div className="mt-6 max-w-xl space-y-3 text-neutral-300">
+            <p>
+              Product engineer who ships end to end:{" "}
+              <span className={HIGHLIGHT_CLASS}>TypeScript</span> back ends,{" "}
+              <span className={HIGHLIGHT_CLASS}>React Native</span> apps and{" "}
+              <span className={HIGHLIGHT_CLASS}>AI agents</span> in production.
+            </p>
+            <p>
+              I work AI-native: I design, direct and review coding agents inside
+              strict guardrails, so moving fast doesn&apos;t mean breaking
+              things.
+            </p>
+            <p>Based in Buenos Aires, working remotely with US time zones.</p>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="font-hand text-xs text-neutral-500">
+              socials ➔
+            </span>
+            {SOCIALS.map((social) => (
+              <Link
+                key={social.label}
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                className="link-mono"
+              >
+                {social.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
