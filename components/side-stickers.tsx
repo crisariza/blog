@@ -6,45 +6,46 @@ import { motion } from "framer-motion";
 /** Link for the "my shelf" label under the book; hidden until there is one */
 const SHELF_URL: string | null = null;
 
+/** Positions are viewport percentages so the stickers stay put while scrolling */
 const STICKERS = [
   {
     src: "/stickers/brain.webp",
-    alt: "",
     width: 520,
     height: 502,
-    top: "14rem",
-    left: "12%",
-    size: "11rem",
+    top: "14%",
+    left: "18%",
+    size: "7.7rem",
     rotate: -8,
+    float: { y: -9, rotate: 1.8, duration: 5.4, delay: 0 },
   },
   {
     src: "/stickers/book.webp",
-    alt: "",
     width: 520,
     height: 520,
-    top: "44rem",
-    left: "34%",
-    size: "12rem",
+    top: "37%",
+    left: "42%",
+    size: "8.4rem",
     rotate: 6,
+    float: { y: -8, rotate: 1.4, duration: 6.1, delay: 0.4 },
   },
   {
     src: "/stickers/king.webp",
-    alt: "",
     width: 300,
     height: 520,
-    top: "74rem",
-    left: "16%",
-    size: "8rem",
+    top: "60%",
+    left: "24%",
+    size: "5.6rem",
     rotate: -4,
+    float: { y: -11, rotate: -2.4, duration: 6.6, delay: 0.8 },
   },
 ];
 
-/** Halftone paper stickers in the empty left margin, only on wide screens */
+/** Halftone paper stickers fixed in the empty left margin, only on wide screens */
 export default function SideStickers() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-y-0 left-0 hidden w-[calc((100vw-48rem)/2)] min-[1400px]:block"
+      className="pointer-events-none fixed inset-y-0 left-0 z-30 hidden w-[calc((100vw-48rem)/2)] min-[1400px]:block"
     >
       {STICKERS.map((sticker, index) => (
         <motion.div
@@ -53,7 +54,7 @@ export default function SideStickers() {
           style={{ top: sticker.top, left: sticker.left, width: sticker.size }}
           initial={{ opacity: 0, y: 12, rotate: sticker.rotate }}
           animate={{ opacity: 1, y: 0, rotate: sticker.rotate }}
-          whileHover={{ rotate: 0, scale: 1.06, y: -4 }}
+          whileHover={{ rotate: 0, scale: 1.08 }}
           transition={{
             type: "spring",
             stiffness: 200,
@@ -61,14 +62,27 @@ export default function SideStickers() {
             delay: 0.2 + index * 0.1,
           }}
         >
-          <Image
-            src={sticker.src}
-            alt={sticker.alt}
-            width={sticker.width}
-            height={sticker.height}
-            className="h-auto w-full drop-shadow-[0_10px_16px_rgba(0,0,0,0.45)]"
-            unoptimized
-          />
+          <motion.div
+            animate={{
+              y: [0, sticker.float.y, 0],
+              rotate: [0, sticker.float.rotate, 0],
+            }}
+            transition={{
+              duration: sticker.float.duration,
+              delay: sticker.float.delay,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          >
+            <Image
+              src={sticker.src}
+              alt=""
+              width={sticker.width}
+              height={sticker.height}
+              className="h-auto w-full drop-shadow-[0_10px_16px_rgba(0,0,0,0.45)]"
+              unoptimized
+            />
+          </motion.div>
           {sticker.src.includes("book") && SHELF_URL && (
             <a
               href={SHELF_URL}

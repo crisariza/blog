@@ -51,9 +51,6 @@ export default function OfficeObjectDialog({
         </div>
 
         <div className="space-y-3 p-6 font-mono text-neutral-800">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-            Objects in my office
-          </p>
           <h2
             id={`${object.id}-title`}
             className="text-lg leading-snug text-neutral-900"
@@ -71,6 +68,7 @@ export default function OfficeObjectDialog({
                 width={object.photo.width}
                 height={object.photo.height}
                 className="h-auto w-full rounded-lg"
+                unoptimized
               />
               <figcaption className="text-[11px] text-neutral-500">
                 {object.photo.caption}

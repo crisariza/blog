@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import StructuredData from "@/components/structured-data";
+import SidePosters from "@/components/side-posters";
 import SideStickers from "@/components/side-stickers";
 
 const handFont = Gloria_Hallelujah({
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <div className="relative flex flex-col min-h-screen">
           <SideStickers />
+          <SidePosters />
           <main className="flex-grow flex flex-col">
             <div className="max-w-3xl w-full px-6 mt-8 mb-8 sm:my-10 mx-auto flex flex-col flex-grow">
               <TopBar />

@@ -18,7 +18,7 @@ export default function DeskLamp({ isOn, onToggle }: DeskLampProps) {
       onClick={onToggle}
       aria-pressed={isOn}
       aria-label={isOn ? "Turn the lamp off" : "Turn the lamp on"}
-      className="group absolute -translate-x-1/2 -translate-y-1/2 rounded-full outline-none transition-shadow hover:shadow-[0_0_0_2px_rgba(255,255,255,0.75),0_0_14px_4px_rgba(255,255,255,0.45)] focus-visible:shadow-[0_0_0_2px_rgba(56,189,248,0.9)]"
+      className="group absolute -translate-x-1/2 -translate-y-1/2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-sky-400/90"
       style={{
         left: toPercent(switchPosition.x, OFFICE_SCENE.width),
         top: toPercent(switchPosition.y, OFFICE_SCENE.height),
@@ -26,6 +26,11 @@ export default function DeskLamp({ isOn, onToggle }: DeskLampProps) {
         height: toPercent(switchRadius * 2, OFFICE_SCENE.height),
       }}
     >
+      {/* Same soft white glow as the other hover targets, no outline */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -inset-[70%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0.25)_40%,rgba(255,255,255,0)_70%)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+      />
       <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-1.5 py-0.5 font-mono text-[10px] text-neutral-200 opacity-0 transition-opacity group-hover:opacity-100">
         {isOn ? "lights off" : "lights on"}
       </span>
