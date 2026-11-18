@@ -26,7 +26,9 @@ const GRAVITY = 981;
 const CABLE_STATIC_FRICTION = 0.6;
 const CABLE_KINETIC_FRICTION = 0.45;
 /** Air drag and internal damping of the cable, per second */
-const CABLE_DAMPING = 1.5;
+const CABLE_DAMPING = 4;
+/** Fastest the cable keeps moving on its own, in cm/s */
+const MAX_CABLE_SPEED = 90;
 /** XPBD compliances (inverse stiffness) */
 const LINK_COMPLIANCE = 1e-8;
 const BEND_COMPLIANCE = 2e-5;
@@ -68,6 +70,9 @@ const { cableExit, bodyRadius, bodyHalfLength } = OFFICE_MOUSE;
 const COUNT = segments + 1;
 const LAST = COUNT - 1;
 const SEGMENT = CABLE_LENGTH / segments;
+const MAX_STRETCH_LENGTH = CABLE_LENGTH * MAX_STRETCH;
+/** Furthest a particle coasts in a substep (cm) */
+const MAX_COAST = MAX_CABLE_SPEED * SUBSTEP;
 const BODY_OFFSETS = [-bodyHalfLength, 0, bodyHalfLength];
 /** Directions the cable leaves the grommet and comes into the mouse in its first layout */
 const LAYOUT_START_DIRECTION = { x: 0.95, y: -0.3 };
@@ -76,6 +81,11 @@ const LAYOUT_END_DIRECTION = { x: 0.55, y: 0.85 };
 const CONTACT_MARGIN = 0.15;
 /** Particles next to the mouse ride on its strain relief and don't collide with it */
 const MOUSE_SKIP = 4;
+/**
+ * Share of its overlap with the mouse a particle is pushed out by per substep:
+ * the mouse nudges the cable aside, but can't stretch it by squeezing it
+ */
+const MOUSE_PUSH = 0.15;
 
 export interface CableSim {
   x: Float64Array;
@@ -90,6 +100,16 @@ export interface CableSim {
   mouseVelocity: Point;
   /** Where the hand wants the mouse, while it's being dragged */
   target: Point | null;
+  /** How much longer than the cable its chain of links is (cm) */
+  stretch: number;
+  /** How much longer than the cable its tightest path is; negative while there's slack (cm) */
+  slack: number;
+  /** How stretched the cable is: 0 slack, 1 at the hard stop */
+  tension: number;
+  /** Direction (unit) a taut cable pulls the mouse in, or null while it's slack */
+  pull: Point | null;
+  /** Hardest the mouse hit the cable's stop since it was last read, in cm/s */
+  impact: number;
   accumulator: number;
   quietFrames: number;
   asleep: boolean;
@@ -219,6 +239,11 @@ export function createCableSim(mouse: Point = OFFICE_MOUSE.start): CableSim {
     mouse: { ...mouse },
     mouseVelocity: { x: 0, y: 0 },
     target: null,
+    stretch: 0,
+    slack: 0,
+    tension: 0,
+    pull: null,
+    impact: 0,
     accumulator: 0,
     quietFrames: 0,
     asleep: false,
@@ -260,6 +285,12 @@ function driveMouse(sim: CableSim) {
     ax *= MAX_DRAG_ACCELERATION / magnitude;
     ay *= MAX_DRAG_ACCELERATION / magnitude;
   }
+  // The tighter the cable, the more of the push against it it takes: all of it at its stop
+  const outward = sim.pull ? -(ax * sim.pull.x + ay * sim.pull.y) : 0;
+  if (sim.pull && outward > 0) {
+    ax += sim.pull.x * outward * sim.tension;
+    ay += sim.pull.y * outward * sim.tension;
+  }
   velocity.x += ax * SUBSTEP;
   velocity.y += ay * SUBSTEP;
 }
@@ -274,6 +305,18 @@ function applyMouseFriction(velocity: Point) {
   }
   velocity.x *= 1 - loss / speed;
   velocity.y *= 1 - loss / speed;
+}
+
+/** How much longer than the cable its chain of links is: they only stretch when it's caught */
+function chainStretch(sim: CableSim) {
+  let length = 0;
+  for (let index = 1; index < COUNT; index++) {
+    length += Math.hypot(
+      sim.x[index] - sim.x[index - 1],
+      sim.y[index] - sim.y[index - 1]
+    );
+  }
+  return length - CABLE_LENGTH;
 }
 
 /**
@@ -303,10 +346,13 @@ function tautPath(sim: CableSim) {
 
 /**
  * A taut cable stretches a little and pulls the mouse back (damped, so the
- * recoil doesn't ring); past its maximum stretch it stops the mouse outright.
+ * recoil doesn't ring); past its maximum stretch it stops the mouse outright:
+ * the mouse can still slide sideways or come back, never go further.
  */
 function applyCableTension(sim: CableSim) {
   const { excess, toward } = tautPath(sim);
+  sim.slack = excess;
+  sim.pull = excess > 0 ? toward : null;
   if (excess <= 0) return;
 
   const { mouse, mouseVelocity: velocity } = sim;
@@ -318,22 +364,73 @@ function applyCableTension(sim: CableSim) {
   velocity.x += toward.x * pull * SUBSTEP;
   velocity.y += toward.y * pull * SUBSTEP;
 
-  const overshoot = Math.min(
-    excess - CABLE_LENGTH * MAX_STRETCH,
-    MAX_STOP_CORRECTION
-  );
+  const overshoot = Math.min(excess - MAX_STRETCH_LENGTH, MAX_STOP_CORRECTION);
   if (overshoot <= 0) return;
   mouse.x += toward.x * overshoot;
   mouse.y += toward.y * overshoot;
   const stillAway = -(velocity.x * toward.x + velocity.y * toward.y);
   if (stillAway <= 0) return;
+  sim.impact = Math.max(sim.impact, stillAway);
   velocity.x += toward.x * stillAway;
   velocity.y += toward.y * stillAway;
+}
+
+/** What's left of a vector once its part going against `along` is taken out, and `sideways` of the rest */
+function restrain(vector: Point, along: Point, sideways: number) {
+  const forward = vector.x * along.x + vector.y * along.y;
+  const sideX = vector.x - along.x * forward;
+  const sideY = vector.y - along.y * forward;
+  const kept = Math.max(forward, 0);
+  return {
+    x: along.x * kept + sideX * sideways,
+    y: along.y * kept + sideY * sideways,
+  };
+}
+
+/**
+ * A cable caught on something can't be pulled any further: once its links are
+ * stretched past their give, whatever part of the mouse's move went away from
+ * the cable is undone, and the more it's stretched the less the mouse can
+ * swing sideways too. It can always come back along the cable, but never
+ * drags it through whatever holds it.
+ */
+function holdSnaggedMouse(sim: CableSim, before: Point) {
+  const stretch = chainStretch(sim);
+  sim.stretch = stretch;
+  const excess = Math.max(sim.slack, stretch);
+  sim.tension = Math.min(1, Math.max(0, excess / MAX_STRETCH_LENGTH));
+  if (stretch <= MAX_STRETCH_LENGTH) return;
+
+  const { mouse, mouseVelocity: velocity } = sim;
+  const exit = exitOf(mouse);
+  const dx = sim.x[LAST - MOUSE_SKIP] - exit.x;
+  const dy = sim.y[LAST - MOUSE_SKIP] - exit.y;
+  const reach = Math.hypot(dx, dy) || 1;
+  const along = { x: dx / reach, y: dy / reach };
+  const sideways = Math.max(0, 2 - stretch / MAX_STRETCH_LENGTH);
+
+  const move = restrain(
+    { x: mouse.x - before.x, y: mouse.y - before.y },
+    along,
+    sideways
+  );
+  mouse.x = before.x + move.x;
+  mouse.y = before.y + move.y;
+  const away = -(velocity.x * along.x + velocity.y * along.y);
+  if (away > 0) sim.impact = Math.max(sim.impact, away);
+  Object.assign(velocity, restrain(velocity, along, sideways));
 }
 
 /** Deepest overlap of the mouse's footprint with the desk objects or the desk's edges */
 function mouseContact(mouse: Point) {
   let deepest: { depth: number; normal: Point } | null = null;
+  // The cable's plug sticks out of the mouse's back: it bumps into things too
+  const plug = deepestContact(
+    exitOf(mouse),
+    CABLE_RADIUS,
+    OFFICE_DESK.obstacles
+  );
+  if (plug) deepest = { depth: plug.distance, normal: plug.normal };
   for (const offset of BODY_OFFSETS) {
     const disc = { x: mouse.x, y: mouse.y + offset };
     const contact = deepestContact(disc, bodyRadius, OFFICE_DESK.obstacles);
@@ -384,10 +481,13 @@ function integrateCable(sim: CableSim) {
   for (let index = 1; index < LAST; index++) {
     const vx = (sim.x[index] - sim.previousX[index]) * keep;
     const vy = (sim.y[index] - sim.previousY[index]) * keep;
+    // A cable lying on a desk doesn't whip: what the solver snapped it into
+    // place by doesn't carry on as speed
+    const limit = Math.min(1, MAX_COAST / (Math.hypot(vx, vy) || 1));
     sim.previousX[index] = sim.x[index];
     sim.previousY[index] = sim.y[index];
-    sim.x[index] += vx;
-    sim.y[index] += vy;
+    sim.x[index] += vx * limit;
+    sim.y[index] += vy * limit;
   }
   const exit = exitOf(sim.mouse);
   sim.previousX[LAST] = sim.x[LAST];
@@ -446,13 +546,17 @@ function solveBending(sim: CableSim) {
   for (let index = 1; index < LAST; index++) solveBend(sim, index, alpha);
 }
 
-/** The cable leaves the mouse straight out of its back before it bends */
+/**
+ * The cable leaves the mouse straight out of its back before it bends. The
+ * rubber boot gives way as the cable tightens: a taut cable pulls it round
+ * to wherever it's being pulled from.
+ */
 function solveStrainRelief(sim: CableSim) {
   const alpha = STRAIN_RELIEF_COMPLIANCE / SUBSTEP ** 2;
   const index = LAST - 1;
   const targetX = sim.x[LAST];
   const targetY = sim.y[LAST] + SEGMENT;
-  const factor = 1 / (1 + alpha);
+  const factor = (1 - sim.tension) ** 2 / (1 + alpha);
   sim.x[index] += (targetX - sim.x[index]) * factor;
   sim.y[index] += (targetY - sim.y[index]) * factor;
 }
@@ -483,8 +587,10 @@ function collideParticle(sim: CableSim, index: number) {
     point.x -= contact.normal.x * depth;
     point.y -= contact.normal.y * depth;
   }
-  if (index < LAST - MOUSE_SKIP) pushOutOfMouse(point, sim.mouse);
   const push = boundsCorrection(point, CABLE_RADIUS, OFFICE_DESK.bounds);
+  // A cable pinned against something has nowhere to go: the mouse rides over it
+  const pinned = contact !== null || push.x !== 0 || push.y !== 0;
+  if (index < LAST - MOUSE_SKIP && !pinned) pushOutOfMouse(point, sim.mouse);
   // Contacts stop the cable rather than fling it: the push carries no velocity
   sim.previousX[index] += point.x + push.x - sim.x[index];
   sim.previousY[index] += point.y + push.y - sim.y[index];
@@ -499,8 +605,8 @@ function pushOutOfMouse(point: Point, mouse: Point) {
     const dy = point.y - (mouse.y + offset);
     const gap = Math.hypot(dx, dy);
     if (gap >= reach || gap === 0) continue;
-    point.x += (dx / gap) * (reach - gap);
-    point.y += (dy / gap) * (reach - gap);
+    point.x += (dx / gap) * (reach - gap) * MOUSE_PUSH;
+    point.y += (dy / gap) * (reach - gap) * MOUSE_PUSH;
   }
 }
 
@@ -559,19 +665,23 @@ function applyCableFriction(sim: CableSim) {
 }
 
 function substep(sim: CableSim) {
+  const before = { ...sim.mouse };
   moveMouse(sim);
   integrateCable(sim);
+  // Friction first: it only slows the cable's own motion, so the links below
+  // always win and a slow pull can't stretch the cable until it snaps free
+  applyCableFriction(sim);
   solveLinks(sim);
   solveBending(sim);
   solveStrainRelief(sim);
   solveTethers(sim);
   collideCable(sim);
   applyCableTension(sim);
+  holdSnaggedMouse(sim, before);
   collideMouse(sim);
   const exit = exitOf(sim.mouse);
   sim.x[LAST] = exit.x;
   sim.y[LAST] = exit.y;
-  applyCableFriction(sim);
 }
 
 /** Positions of the mouse and every particle, to measure how much a step moved them */
