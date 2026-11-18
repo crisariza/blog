@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import profilePic from "@/public/profile-pic.png";
+import youngCris from "@/public/about-young-cris.webp";
 import Title from "@/components/title";
 
 export default function AboutPage() {
@@ -47,19 +47,30 @@ export default function AboutPage() {
               playing around with hardware and eventually writing software.
             </motion.p>
           </div>
-          <motion.div
-            className="w-36 flex-shrink-0 order-1 md:order-2 self-center md:self-start"
+          <motion.figure
+            className="relative w-44 flex-shrink-0 order-1 md:order-2 self-center md:self-start"
             variants={itemVariants}
-            whileHover={{ scale: 1.05, rotate: 2 }}
-            transition={{ duration: 0.2 }}
+            whileHover={{ rotate: 0, scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            style={{ rotate: 3 }}
           >
-            <Image
-              src={profilePic}
-              alt="Cristian Ariza Picture"
-              className="rounded-full"
-              priority={true}
+            <span
+              aria-hidden
+              className="absolute -top-3 left-1/2 z-10 h-6 w-16 -translate-x-1/2 rotate-2 bg-amber-200/25"
             />
-          </motion.div>
+            <div className="rounded-sm bg-[#efe6d6] p-2 pb-8 shadow-elevated">
+              <Image
+                src={youngCris}
+                alt="Cris as a kid, around the time he got his first computer"
+                className="h-auto w-full"
+                placeholder="blur"
+                priority
+              />
+            </div>
+            <figcaption className="absolute inset-x-0 bottom-2 text-center font-hand text-xs text-neutral-700">
+              little me
+            </figcaption>
+          </motion.figure>
         </div>
         <div className="flex flex-col gap-6">
           <motion.p variants={itemVariants}>
