@@ -1,14 +1,18 @@
 ---
-title: "Club Lanús engineering platform"
-summary: "A design system, a unified admin panel and the quality standards that every club repo follows."
+title: "Club Lanús design system"
+summary: "I designed the club's design system in Figma (tokens, components, charts and emails, light and dark) and shipped it as five versioned packages that every club product uses."
 company: "Club Atlético Lanús"
-role: "Lead Engineer (volunteer)"
+role: "Design Engineer (volunteer)"
 period: "2024 - Present"
 order: 6
-category: "design system · dx"
-badge: "PLATFORM"
-tagline: "The design system and standards behind every club repo"
+category: "design system · design engineering"
+badge: "DESIGN ENGINEERING"
+tagline: "Designed in Figma, shipped as versioned code"
+image: "/projects/lanus-ds.jpg"
+imageAlt: "Club Lanús design system in Figma: chart components in the club's maroon"
+frame: "figma · design system"
 stack:
+  - Figma
   - pnpm + Turborepo
   - Changesets
   - Storybook
@@ -24,7 +28,17 @@ links: []
 
 I started the club's engineering as a volunteer and have written about 84% of the commits across 20+ repos. A small team now contributes, so the work became less about features and more about making the right thing the easy thing.
 
-## Design system
+## Designed in Figma
+
+I worked as the design engineer: I designed the system in Figma first and then built it. The file covers foundations (brand, surface, stroke and text tokens, typography, spacing, radii and icon sizes), buttons and actions, fields, data display, navigation, feedback and overlays, charts, emails, brand assets, icons, and a responsive and contrast page. Every page exists in light and dark.
+
+![Buttons and actions in light mode: variants, sizes, states, badges and social buttons](/projects/lanus-ds-buttons.jpg)
+
+![Chart components in light and dark: bar, step line, balance history and pie charts](/projects/lanus-ds-charts.jpg)
+
+![Foundations: brand, surface, stroke and text color tokens](/projects/lanus-ds-foundations.jpg)
+
+## Shipped as code
 
 `@clublanus/platform` is a monorepo with five versioned packages: tokens, web components, React Native components, email templates and an end-to-end kit. The web package alone has had 129 releases and about 90 components, with Storybook stories and accessibility checks. Guards fail the build on colors outside the tokens, and each breaking change ships with a migration guide for the consuming apps.
 

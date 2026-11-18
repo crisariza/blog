@@ -45,6 +45,7 @@ const toProject = ({ slug, data, content }: MarkdownFile): Project => ({
   links: asLinks(data.links),
   image: asOptionalString(data.image),
   imageAlt: asOptionalString(data.imageAlt),
+  frame: asOptionalString(data.frame),
   body: content,
 });
 

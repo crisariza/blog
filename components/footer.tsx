@@ -3,103 +3,146 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+const EMAIL = "mecrisariza@gmail.com";
+const BOOKING_URL = "https://cal.com/crisariza/intro";
+const CURRENT_YEAR = new Date().getFullYear();
+
+const SOCIALS = [
+  { label: "GitHub", href: "https://github.com/crisariza" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/crisariza" },
+  { label: "X", href: "https://x.com/crisarizx" },
+];
+
+function CalendarIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      aria-hidden
+    >
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      aria-hidden
+    >
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m4 7 8 6 8-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
 export default function Footer() {
   return (
     <motion.footer
-      className="flex justify-between items-center border-t border-line pt-6 font-mono text-xs text-neutral-400"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      className="relative overflow-hidden rounded-[1.75rem] border border-white/[0.06] bg-gradient-to-br from-[#1b1b22] via-[#16161c] to-[#121620] p-6 sm:p-10"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5 }}
     >
-      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Link href="mailto:mecrisariza@gmail.com" className="link-subtle">
-          {" "}
-          <p>mecrisariza@gmail.com</p>
-        </Link>
-      </motion.div>
+      <figure className="flex gap-4">
+        <span
+          aria-hidden
+          className="font-hand text-5xl leading-none text-amber-700/80"
+        >
+          “
+        </span>
+        <div>
+          <blockquote className="font-hand text-xl leading-relaxed text-neutral-100 sm:text-2xl">
+            “Make it work, make it right, make it fast.”
+          </blockquote>
+          <figcaption className="mt-3 flex items-center gap-3 font-hand text-sm text-neutral-400">
+            — Kent Beck
+            <span
+              aria-hidden
+              className="h-1.5 w-16 rounded-full bg-amber-700/60"
+            />
+          </figcaption>
+        </div>
+      </figure>
 
-      <div className="flex items-center gap-4">
-        <motion.div
-          whileHover={{ scale: 1.2, rotate: 5 }}
-          whileTap={{ scale: 0.9 }}
+      <div className="mt-14 flex flex-col gap-6">
+        <div>
+          <p className="eyebrow">Get in touch · Collaboration</p>
+          <h2 className="mt-2 font-hand text-3xl text-neutral-100 sm:text-4xl">
+            let&apos;s build something great.
+          </h2>
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-300">
+            Open to remote senior and founding engineer roles, product work and
+            conversations about AI agents. Drop a line or book a quick intro
+            chat.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 min-[520px]:flex-row">
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-neutral-100 px-5 py-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-white"
+          >
+            <CalendarIcon />
+            Book a 30m call
+            <span aria-hidden>↗</span>
+          </a>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/10 px-5 py-3 text-sm text-neutral-200 transition-colors hover:border-white/25 hover:text-white"
+          >
+            <span className="text-rose-400">
+              <MailIcon />
+            </span>
+            {EMAIL}
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-12 flex flex-wrap items-center gap-3">
+        <span className="font-hand text-sm text-neutral-500">
+          find me online ➔
+        </span>
+        {SOCIALS.map((social) => (
+          <a
+            key={social.label}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-white/[0.06] bg-black/20 px-4 py-2 font-mono text-xs text-neutral-300 transition-colors hover:border-white/20 hover:text-white"
+          >
+            {social.label} <span aria-hidden>↗</span>
+          </a>
+        ))}
+      </div>
+
+      <div className="mt-12 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-neutral-500">
+        <p>
+          <Link href="/" className="font-hand text-sm text-neutral-300">
+            cris ariza
+          </Link>{" "}
+          · © {CURRENT_YEAR} · crafted with code &amp; agents
+        </p>
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="rounded-full border border-white/10 px-4 py-2 text-neutral-400 transition-colors hover:border-white/25 hover:text-neutral-100"
         >
-          <Link
-            href="https://linkedin.com/in/crisariza"
-            target="_blank"
-            className="link-subtle"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </Link>
-        </motion.div>
-        <motion.div
-          whileHover={{ scale: 1.2, rotate: -5 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <Link
-            href="https://x.com/crisarizx"
-            target="_blank"
-            className="link-subtle"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </Link>
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
-          <Link
-            href="https://cal.com/crisariza/intro"
-            target="_blank"
-            className="link-subtle"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z" />
-            </svg>
-          </Link>
-        </motion.div>
-        <motion.div whileHover={{ x: 2 }} whileTap={{ scale: 0.95 }}>
-          <Link
-            target="_blank"
-            href="https://github.com/crisariza/blog"
-            className="link-inline flex items-center gap-1"
-          >
-            <span>Source</span>
-            <motion.svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="inline-block"
-              whileHover={{ rotate: 45 }}
-              transition={{ duration: 0.2 }}
-            >
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </motion.svg>
-          </Link>
-        </motion.div>
+          back to top ↑
+        </button>
       </div>
     </motion.footer>
   );

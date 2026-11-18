@@ -8,4 +8,4 @@ export const formatProjectNumber = (order: number): string =>
 
 // Shows the public domain in the browser frame, or a neutral label for private work
 export const frameLabel = (project: Project): string =>
-  project.links[0]?.label ?? PRIVATE_FRAME_LABEL;
+  project.frame ?? project.links[0]?.label ?? PRIVATE_FRAME_LABEL;

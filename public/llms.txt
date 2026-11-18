@@ -14,11 +14,10 @@ Personal site and portfolio of Cristian Ariza, a senior product engineer who shi
 - `/projects/lito` - Lito, a production AI agent on WhatsApp for a health insurer
 - `/projects/premedic` - Premedic members app and API layer
 - `/projects/lanus-id` - Lanús ID single sign-on and digital tickets
-- `/projects/museo-granate` - Museo Granate, the club's history as data
+- `/projects/estadisticas` - Estadísticas, a century of club history as data
 - `/projects/ramonin` - Ramonín, the club's AI assistant
-- `/projects/lanus-platform` - Club Lanús engineering platform
+- `/projects/lanus-platform` - Club Lanús design system, designed in Figma and shipped as code
 - `/projects/soffi` - Soffi launch site
-- `/projects/football-head` - Juegos Granates and Football Head
 
 ## Metadata
 - Site URL: https://crisariza.com

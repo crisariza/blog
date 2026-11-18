@@ -18,6 +18,8 @@ export interface Project {
   links: ProjectLink[];
   image?: string;
   imageAlt?: string;
+  /** Label for the browser frame when the first link isn't the right one (e.g. a Figma file) */
+  frame?: string;
   body: string;
 }
 

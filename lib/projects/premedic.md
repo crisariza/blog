@@ -1,6 +1,6 @@
 ---
 title: "Premedic: members app and API layer"
-summary: "Took over a legacy React Native app for a health insurer, built the API layer that took third-party secrets out of it, and kept shipping to both stores."
+summary: "Took over a legacy React Native app for a health insurer and built, as sole author, the API layer that unifies 13 upstream systems and now carries 100% of the app's traffic, while shipping to both stores."
 company: "Paisanos · Premedic"
 role: "Product Engineer"
 period: "2026 - Present"

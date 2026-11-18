@@ -1,15 +1,25 @@
 import "@/styles/globals.css";
 import { Gloria_Hallelujah } from "next/font/google";
+import localFont from "next/font/local";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import StructuredData from "@/components/structured-data";
+import SideStickers from "@/components/side-stickers";
 
 const handFont = Gloria_Hallelujah({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-hand",
+  display: "swap",
+});
+
+// Allo by Josh Puckett (SIL Open Font License), variable in weight, roundness and optical size
+const alloFont = localFont({
+  src: "./fonts/allo-variable.woff2",
+  variable: "--font-allo",
+  weight: "100 900",
   display: "swap",
 });
 
@@ -71,7 +81,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <html lang="en" className={handFont.variable}>
+    <html lang="en" className={`${handFont.variable} ${alloFont.variable}`}>
       <body>
         <StructuredData />
         <script
@@ -80,7 +90,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify(websiteStructuredData),
           }}
         />
-        <div className="flex flex-col min-h-screen">
+        <div className="relative flex flex-col min-h-screen">
+          <SideStickers />
           <main className="flex-grow flex flex-col">
             <div className="max-w-3xl w-full px-6 mt-8 mb-8 sm:my-10 mx-auto flex flex-col flex-grow">
               <TopBar />

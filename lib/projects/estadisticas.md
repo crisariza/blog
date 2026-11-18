@@ -1,15 +1,15 @@
 ---
-title: "Museo Granate: a century of club history as data"
-summary: "The club's historical archive turned into an API, a stats site and daily content, built on a multi-source data pipeline with provenance."
+title: "Estadísticas: a century of club history as data"
+summary: "The club's stats site and API: 4,000+ matches and 1,500+ players from a century of history, sourced from ~238,000 scanned pages through a data pipeline with provenance."
 company: "Club Atlético Lanús"
-role: "Lead Engineer (volunteer)"
+role: "Head of Engineering (volunteer)"
 period: "2024 - Present"
 order: 4
 category: "data pipeline · history"
 badge: "LIVE PRODUCT"
-tagline: "A century of club history, searchable and sourced"
-image: "/projects/museo-granate.jpg"
-imageAlt: "Museo Granate home page"
+tagline: "A century of club stats, searchable and sourced"
+image: "/projects/estadisticas.jpg"
+imageAlt: 'Estadísticas site showing the "On this day" page with historical matches'
 stack:
   - TypeScript
   - Express
@@ -20,10 +20,10 @@ stack:
   - Satori
   - Vitest
 links:
-  - label: "museogranate.clublanus.com"
-    href: "https://museogranate.clublanus.com"
   - label: "estadisticas.clublanus.com"
     href: "https://estadisticas.clublanus.com"
+  - label: "museogranate.clublanus.com"
+    href: "https://museogranate.clublanus.com"
 ---
 
 ## The problem
@@ -43,7 +43,7 @@ The result: 4,000+ matches and 1,500+ players with lineups, formations, cards, p
 
 ## Products on top
 
-![Estadísticas site showing the "On this day" page with historical matches](/projects/estadisticas.jpg)
+![Museo Granate, the museum site built on the same archive](/projects/museo-granate.jpg)
 
 - **Museo Granate**, the museum site (10,000+ monthly users).
 - **Estadísticas**, which I split out into its own product: about 25 sections rebuilt to the new design in six weeks, match pages with formations on the pitch and weather, player and coach careers, head-to-head, and a stadium map. It calls the API only through a server-side proxy with an endpoint allow-list.
