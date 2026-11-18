@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
 import CoffeeSteam from "@/components/office/coffee-steam";
@@ -9,6 +9,7 @@ import DeskDrawers from "@/components/office/desk-drawers";
 import DeskLamp from "@/components/office/desk-lamp";
 import DeskMouse from "@/components/office/desk-mouse";
 import { OFFICE_OBJECTS, OFFICE_SCENE } from "@/lib/office-objects";
+import { preloadOfficeScene } from "@/lib/office-preload";
 import { OfficeObject, OfficeSceneProps } from "@/types";
 
 /** The bulb warms up: a short delay, then the light eases in */
@@ -59,14 +60,33 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [lampOn, setLampOn] = useState(true);
 
+  /** Both scene images are decoded: nothing is drawn on top of them before that */
+  const [isPainted, setIsPainted] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    void preloadOfficeScene().then(() => {
+      if (isMounted) setIsPainted(true);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const hovered = OFFICE_OBJECTS.find((object) => object.id === hoveredId);
 
   return (
     <div
-      className="relative select-none overflow-hidden rounded-card"
+      className="relative select-none overflow-hidden rounded-card bg-[#ded1cd]"
       style={VIEW_STYLE}
     >
-      <div className="absolute inset-y-0" style={SCENE_STYLE}>
+      <div
+        className={cn(
+          "absolute inset-y-0 transition-opacity duration-300",
+          isPainted ? "opacity-100" : "opacity-0"
+        )}
+        style={SCENE_STYLE}
+      >
         <Image
           src={OFFICE_SCENE.src}
           alt={OFFICE_SCENE.alt}
@@ -143,16 +163,20 @@ export default function OfficeScene({ onSelect }: OfficeSceneProps) {
           </div>
         ))}
 
-        <CoffeeSteam />
-        <DeskLamp isOn={lampOn} onToggle={() => setLampOn((on) => !on)} />
-        <DeskDrawers lampOn={lampOn} />
-        <DeskMouse lampOn={lampOn} />
+        {isPainted && (
+          <>
+            <CoffeeSteam />
+            <DeskLamp isOn={lampOn} onToggle={() => setLampOn((on) => !on)} />
+            <DeskDrawers lampOn={lampOn} />
+            <DeskMouse lampOn={lampOn} />
+          </>
+        )}
 
         <AnimatePresence>
           {hovered && (
             <motion.span
               key={hovered.id}
-              className="pointer-events-none absolute flex h-8 w-8 items-center justify-center rounded-lg bg-black text-amber-200"
+              className="pointer-events-none absolute z-20 flex h-8 w-8 items-center justify-center rounded-lg bg-black text-amber-200"
               style={badgePosition(hovered.hotspot)}
               initial={{ opacity: 0, scale: 0.6, x: 8, y: -8 }}
               animate={{ opacity: 1, scale: 1, x: 8, y: -8 }}

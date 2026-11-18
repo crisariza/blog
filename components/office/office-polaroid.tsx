@@ -1,13 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import OfficeSceneDialog from "@/components/office/office-scene-dialog";
 import { OFFICE_SCENE } from "@/lib/office-objects";
+import { preloadOfficeScene } from "@/lib/office-preload";
+
+/** How long after the page shows up the full scene starts downloading (ms) */
+const PRELOAD_DELAY = 1200;
+
+const preload = () => void preloadOfficeScene();
 
 export default function OfficePolaroid() {
   const [isOpen, setIsOpen] = useState(false);
+  const photoRef = useRef<HTMLImageElement>(null);
+  const getOrigin = useCallback(
+    () => photoRef.current?.getBoundingClientRect() ?? null,
+    []
+  );
+
+  // The scene is fetched while the visitor reads the hero, so it opens instantly
+  useEffect(() => {
+    const timer = window.setTimeout(preload, PRELOAD_DELAY);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -19,12 +36,15 @@ export default function OfficePolaroid() {
         <motion.button
           type="button"
           onClick={() => setIsOpen(true)}
+          onPointerEnter={preload}
+          onFocus={preload}
           aria-label="Open my office"
           className="block w-full -rotate-3 rounded-sm bg-neutral-100 p-2 pb-7 text-left shadow-elevated outline-none focus-visible:ring-2 focus-visible:ring-accent"
           whileHover={{ rotate: 0, scale: 1.03 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
           <Image
+            ref={photoRef}
             src={OFFICE_SCENE.polaroidSrc}
             alt={OFFICE_SCENE.alt}
             width={OFFICE_SCENE.polaroidSize}
@@ -40,7 +60,12 @@ export default function OfficePolaroid() {
       </div>
 
       <AnimatePresence>
-        {isOpen && <OfficeSceneDialog onClose={() => setIsOpen(false)} />}
+        {isOpen && (
+          <OfficeSceneDialog
+            onClose={() => setIsOpen(false)}
+            getOrigin={getOrigin}
+          />
+        )}
       </AnimatePresence>
     </>
   );

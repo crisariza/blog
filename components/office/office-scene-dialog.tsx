@@ -2,12 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useFlipPresence } from "@/lib/use-flip-presence";
 import OfficeObjectDialog from "@/components/office/office-object-dialog";
 import OfficeScene from "@/components/office/office-scene";
 import { OfficeObject, OfficeSceneDialogProps } from "@/types";
 
-export default function OfficeSceneDialog({ onClose }: OfficeSceneDialogProps) {
+/** The polaroid hangs a little crooked: the scene straightens up as it opens */
+const POLAROID_TILT = -3;
+
+export default function OfficeSceneDialog({
+  onClose,
+  getOrigin,
+}: OfficeSceneDialogProps) {
   const [selected, setSelected] = useState<OfficeObject | null>(null);
+  const panelRef = useFlipPresence<HTMLDivElement>({
+    getOrigin,
+    rotate: POLAROID_TILT,
+  });
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -31,23 +42,22 @@ export default function OfficeSceneDialog({ onClose }: OfficeSceneDialogProps) {
   }, [selected, onClose]);
 
   return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <motion.div
+        aria-hidden
+        className="absolute inset-0 bg-black/85 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={onClose}
+      />
+      <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="My office"
-        className="relative w-[min(100%,calc((100dvh-7rem)*1.124))] max-w-5xl"
-        initial={{ scale: 0.94, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.94, opacity: 0 }}
-        transition={{ duration: 0.25 }}
-        onClick={(event) => event.stopPropagation()}
+        className="relative w-[min(100%,calc((100dvh-7rem)*1.124))] max-w-5xl opacity-0"
       >
         <div className="mb-3 flex items-center justify-between">
           <p className="font-hand text-sm text-neutral-300">
@@ -64,7 +74,7 @@ export default function OfficeSceneDialog({ onClose }: OfficeSceneDialogProps) {
         </div>
 
         <OfficeScene onSelect={setSelected} />
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {selected && (
@@ -74,6 +84,6 @@ export default function OfficeSceneDialog({ onClose }: OfficeSceneDialogProps) {
           />
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
