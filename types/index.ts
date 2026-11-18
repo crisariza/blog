@@ -114,6 +114,8 @@ export interface OfficeObject {
 
 export interface OfficeSceneDialogProps {
   onClose: () => void;
+  /** The polaroid the scene opens out of */
+  getOrigin: FlipOrigin;
 }
 
 export interface OfficeObjectDialogProps {
@@ -141,6 +143,18 @@ export interface OfficeSceneProps {
 export interface DeskMouseProps {
   lampOn: boolean;
 }
+
+/** The mouse cable's sound effects (see lib/office-sound.ts) */
+export interface CableSound {
+  /** How hard the cable is being stretched right now, 0 to 1 */
+  strain: (tension: number) => void;
+  /** The cable stopping the mouse dead, at this speed (cm/s) */
+  thud: (speed: number) => void;
+  dispose: () => void;
+}
+
+/** Where an overlay grows out of and shrinks back into: an element on the page */
+export type FlipOrigin = () => DOMRect | null;
 
 /**
  * A desk object the mouse and its cable can pass behind: a cut-out of the
