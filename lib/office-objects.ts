@@ -4,8 +4,9 @@ import { OfficeObject, Point } from "@/types";
 export const OFFICE_SCENE = {
   src: "/office/office-on.webp",
   srcLampOff: "/office/office-off.webp",
-  /** The polaroid uses the full scene, with the mouse still on the desk */
-  polaroidSrc: "/office/office-polaroid.webp",
+  /** Square crop centered on the cubicle, with the mouse still on the desk */
+  polaroidSrc: "/office/office-polaroid-square.webp",
+  polaroidSize: 900,
   alt: "Isometric illustration of Cris coding at his desk in a navy cubicle, with a Club Atlético Lanús pennant, Vercel mints, a steel mug and framed posters",
   width: 2336,
   height: 1744,

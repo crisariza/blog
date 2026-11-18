@@ -28,7 +28,7 @@ export default function AboutPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Title text="about me" eyebrow="About" />
+      <Title text="about me" />
       <motion.div
         className="mb-8"
         variants={containerVariants}
@@ -45,6 +45,11 @@ export default function AboutPage() {
               Since I was a kid, I&apos;ve been fascinated by computers. I got
               my first one at five years old, and as I grew up, I started
               playing around with hardware and eventually writing software.
+            </motion.p>
+            <motion.p variants={itemVariants}>
+              Computers, music, video games and football were my safe place. I
+              spent my childhood chasing a ball around, playing GTA and
+              Minecraft, with The Beatles always playing in the background.
             </motion.p>
           </div>
           <motion.figure
