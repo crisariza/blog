@@ -77,3 +77,68 @@ export interface PageProps {
     slug: string;
   }>;
 }
+
+// Office scene
+export type OfficeObjectModel = "pennant" | "mints" | "mug";
+
+/** A piece of text that can optionally link somewhere */
+export interface TextSegment {
+  text: string;
+  href?: string;
+}
+
+export interface OfficeObjectPhoto {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
+export interface OfficeObject {
+  id: string;
+  title: string;
+  description: TextSegment[];
+  model: OfficeObjectModel;
+  /** Polygon over the scene image, in the image's pixel coordinates */
+  hotspot: [number, number][];
+  /** CSS background for the 3D viewer panel */
+  backdrop: string;
+  link?: { label: string; href: string };
+  photo?: OfficeObjectPhoto;
+}
+
+export interface OfficeSceneDialogProps {
+  onClose: () => void;
+}
+
+export interface OfficeObjectDialogProps {
+  object: OfficeObject;
+  onClose: () => void;
+}
+
+export interface ObjectViewerProps {
+  model: OfficeObjectModel;
+}
+
+export interface RichTextProps {
+  segments: TextSegment[];
+}
+
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface OfficeSceneProps {
+  onSelect: (object: OfficeObject) => void;
+}
+
+export interface DeskMouseProps {
+  lampOn: boolean;
+}
+
+export interface DeskLampProps {
+  isOn: boolean;
+  onToggle: () => void;
+}
